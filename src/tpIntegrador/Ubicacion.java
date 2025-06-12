@@ -1,5 +1,8 @@
 package tpIntegrador;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ubicacion {
 
 	private double latitud;
@@ -31,11 +34,16 @@ public class Ubicacion {
 		double a = Math.pow(Math.sin(dlat / 2), 2)
 		         + Math.cos(lat2) * Math.cos(lat1) * Math.pow(Math.sin(dLong / 2), 2);
 
-		double radioTierra = 6371; // in km
+		double radioTierra = 6371; // en km
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		double distancia = radioTierra * c;
 
 		return distancia;
 
+	}
+	
+	public List<Ubicacion> lasQueEstanAMenosDe_Km(List<Ubicacion> ubicaciones, double distanciaLimite){
+		List<Ubicacion> nuevaLista = ubicaciones.stream().filter(ubicacion -> this.distanciaEnKmA(ubicacion)<distanciaLimite).toList();
+		return nuevaLista;
 	}
 }
