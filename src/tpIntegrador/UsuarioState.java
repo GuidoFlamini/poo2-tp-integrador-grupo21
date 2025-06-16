@@ -1,8 +1,12 @@
 package tpIntegrador;
 
+import tpIntegrador.enums.TipoDeOpinion;
+
 public abstract class UsuarioState {
 
 	public abstract String getCategoriaPara(Usuario usuario);
+
+	protected abstract void opinarSobre(Usuario usuario, TipoDeOpinion tipoDeOpinion, Muestra m);
 		
 	
 

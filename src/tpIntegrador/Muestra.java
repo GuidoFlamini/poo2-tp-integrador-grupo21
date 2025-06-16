@@ -32,5 +32,9 @@ public class Muestra {
     public List<Opinion> getOpiniones() {
         return opiniones;
     }
+
+	public void agregarVotacion(Opinion o) {
+		// TODO Auto-generated method stub
+	}
 }
 
