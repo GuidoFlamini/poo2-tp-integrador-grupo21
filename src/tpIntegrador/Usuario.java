@@ -38,7 +38,7 @@ public class Usuario {
 	public void opinarSobre(TipoDeOpinion tipoDeOpinion, Muestra m) {
 		categoria.opinarSobre(this, tipoDeOpinion, m);
 		Opinion o = new Opinion(this, tipoDeOpinion);
-		m.agregarVotacion(o);
+		m.agregarOpinion(o);
 		opinionesRealizadas.add(o);
 	}
 }
