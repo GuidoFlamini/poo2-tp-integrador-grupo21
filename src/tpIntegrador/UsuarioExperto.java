@@ -11,7 +11,13 @@ public class UsuarioExperto extends UsuarioState {
 	
 	@Override
 	public void opinarSobre(Usuario usuario, TipoDeOpinion tipoDeOpinion, Muestra m) {
-		//A menos de que esté cerrada pasa siempre
+		if(m.esMuestraVerificada()) {
+			throw new IllegalArgumentException("No se pudo realizar la votación dado que la muestra está verificada");
+		} else {
+			Opinion o = new Opinion(usuario, tipoDeOpinion);
+			usuario.getOpinionesRealizadas().add(o);
+			m.agregarOpinion(o);
+		}
 	}
 
 }

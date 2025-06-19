@@ -22,8 +22,23 @@ public class Muestra {
         this.opiniones = new ArrayList<>();
         this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
     }
+    
+    public Muestra(Ubicacion ubicacion, TipoDeOpinion tipoDeVinchuca, Usuario usuarioCreadorDeMuestra) {
+    	this.foto = "fotoDeLaMuestra";
+        this.ubicacion = ubicacion;
+        this.fechaDeCreacion = LocalDate.now();
+        this.nombresDeUsuario = new ArrayList<>();
+        Opinion opinionInicial = new Opinion(usuarioCreadorDeMuestra, tipoDeVinchuca);
+        this.opiniones = new ArrayList<>();
+        opiniones.add(opinionInicial);
+        this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
+    }
 
-    public String getFoto() {
+    public LocalDate getFechaDeCreacion() {
+		return fechaDeCreacion;
+	}
+
+	public String getFoto() {
         return foto;
     }
 
@@ -42,14 +57,31 @@ public class Muestra {
     public Usuario getUsuarioCreadorDeMuestra() {
         return usuarioCreadorDeMuestra;      
     }
+    
+    public String getNombreDeUsuarioCreador() {
+    	return usuarioCreadorDeMuestra.getNombre();
+    }
 
 
-
+    /*
     public void agregarOpinion(Opinion opinion) {  // ¿Por qué no de tipo List<Opinion>?
-        getOpiniones().add(opinion);
-    } 
+    	getOpiniones().add(opinion);
+    } */
+    
+    public void agregarOpinion(Opinion opinion) {
+    	if(elUsuarioYaOpino(opinion.getNombreDeUsuario())) {
+    		throw new IllegalArgumentException("No puedes opinar dos veces sobre la misma muestra");
+    	} else {
+    		nombresDeUsuario.add(opinion.getNombreDeUsuario());
+    		opiniones.add(opinion);
+    	}
+    }
+    
+    private boolean elUsuarioYaOpino(String usuarioQueQuiereOpinar) {
+    	return nombresDeUsuario.stream().anyMatch(nombreUsuario -> (nombreUsuario==usuarioQueQuiereOpinar));
+    }
 
-    private boolean hayOpinionesDeExpertos() {
+    public boolean hayOpinionesDeExpertos() {
         return getOpiniones().stream().anyMatch(Opinion::esOpinionDeExperto);
     }
 

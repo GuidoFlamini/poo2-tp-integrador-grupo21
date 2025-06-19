@@ -26,6 +26,10 @@ public class Opinion {
     public Usuario getUsuario() {
         return usuario;
     }
+    
+    public String getNombreDeUsuario() {
+    	return usuario.getNombre();
+    }
 
     public LocalDate getFecha() {
         return fechaDeCreacion;
