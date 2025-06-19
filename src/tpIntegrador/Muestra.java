@@ -28,6 +28,7 @@ public class Muestra {
         this.ubicacion = ubicacion;
         this.fechaDeCreacion = LocalDate.now();
         this.nombresDeUsuario = new ArrayList<>();
+        nombresDeUsuario.add(usuarioCreadorDeMuestra.getNombre());
         Opinion opinionInicial = new Opinion(usuarioCreadorDeMuestra, tipoDeVinchuca);
         this.opiniones = new ArrayList<>();
         opiniones.add(opinionInicial);
