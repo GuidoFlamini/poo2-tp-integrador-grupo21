@@ -8,11 +8,13 @@ import tpIntegrador.Usuario;
 public class UsuarioTestCase {
 	Usuario pepe = new Usuario("pepe", false);
 	Usuario juan = new Usuario("juan", true);
+	Usuario tito = new Usuario("tito", true);
 	
 	@BeforeEach
 	public void setUp() throws Exception {
 		pepe = new Usuario("pepe", false);
 		juan = new Usuario("juan", true);
+		juan = new Usuario("tito", true);
 	}
 	
 	@Test

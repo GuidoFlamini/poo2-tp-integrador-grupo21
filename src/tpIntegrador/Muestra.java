@@ -31,6 +31,10 @@ public class Muestra {
         return ubicacion;
     }
 
+    public LocalDate getFecha() {
+        return fechaDeCreacion;
+    }
+
     public List<String> getNombresDeUsuario() {
         return nombresDeUsuario;
     }
@@ -45,22 +49,13 @@ public class Muestra {
 
 
 
-    public void agregarOpinion(Opinion opinion) {  // ¿Por qué no de tipo List<Opinion>?
+    public void agregarOpinion(Opinion opinion) {  
         getOpiniones().add(opinion);
     } 
 
     private boolean hayOpinionesDeExpertos() {
-        return getOpiniones().stream().anyMatch(Opinion::esOpinionDeExperto);
+        return getOpiniones().stream().anyMatch(opinion -> opinion.esOpinionDeExperto());
     }
-
-        
-    //public void getTipoDeOpinion(List<Opinion> getOpiniones) {
-    //    getOpiniones.stream().forEach(opinion -> opinion.getTipo());
-    //}
-    // Recorre la lista de opiniones usando un stream.
-    // Para cada opinion, llama a getTipo().  
-    // Pero no hace nada con el resultado de getTipo(). Simplemente lo obtiene y lo descarta.
-
 
     public List<TipoDeOpinion> getTiposDeOpinion() {
     return opiniones.stream()
