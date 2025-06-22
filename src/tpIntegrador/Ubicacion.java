@@ -46,4 +46,13 @@ public class Ubicacion {
 		List<Ubicacion> nuevaLista = ubicaciones.stream().filter(ubicacion -> this.distanciaEnKmA(ubicacion)<distanciaLimite).toList();
 		return nuevaLista;
 	}
+/*	
+	public List<Muestra> lasMuestras_QueEstanAMenosDe_KmDe_(List<Muestra> listaDeMuestras, double distancia, Muestra muestra){
+		List<Muestra> nuevaListaDeMuestras = new ArrayList<>();
+		for (Muestra m : listaDeMuestras) {
+			if(distanciaEnKmA(muestra.getUbicacion())<distancia) {
+				
+			}
+		}
+	}*/
 }

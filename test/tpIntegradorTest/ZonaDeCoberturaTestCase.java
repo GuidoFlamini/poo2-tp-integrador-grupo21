@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
+import java.util.List;
+
+import tpIntegrador.Muestra;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
 
@@ -12,8 +16,18 @@ public class ZonaDeCoberturaTestCase {
 	//Ubicacion unq = new Ubicacion(-34.7207, -58.2549);
 	Ubicacion unq = mock(Ubicacion.class);
 	Ubicacion lasFlores = mock(Ubicacion.class);
+	Ubicacion tandil = mock(Ubicacion.class);
 	ZonaDeCobertura bernal = new ZonaDeCobertura("Bernal", unq, 11); //nombre, epicentro, radio
 	ZonaDeCobertura wilde = new ZonaDeCobertura("Wilde", lasFlores, 6);
+	ZonaDeCobertura partidoDeTandil = new ZonaDeCobertura("Partido de Tandil", tandil, 50);
+	Muestra muestra1 = mock(Muestra.class);
+	Muestra muestra2 = mock(Muestra.class);
+	Muestra muestra3 = mock(Muestra.class);
+	
+	@BeforeEach
+	void setUp() {
+		when(unq.distanciaEnKmA(tandil)).thenReturn((double) 400);
+	}
 	
 	@Test
 	void unaZonaDeCoberturaTieneNombreEpicentroYRadio() {
@@ -37,5 +51,27 @@ public class ZonaDeCoberturaTestCase {
 	void wildeNoSeSolapaConBernal() {
 		when(lasFlores.distanciaEnKmA(unq)).thenReturn((double) 20);
 		assertFalse(wilde.seSolapaCon(bernal));
+	}
+	
+	@Test
+	void unaZonaDeCoberturaPuedeSaberLasMuestrasQueSeEncuentranDentroDeElla() {
+		when(muestra1.getUbicacion()).thenReturn(lasFlores);
+		when(muestra2.getUbicacion()).thenReturn(unq);
+		when(muestra3.getUbicacion()).thenReturn(tandil);		
+		when(unq.distanciaEnKmA(unq)).thenReturn((double) 0);
+		when(unq.distanciaEnKmA(lasFlores)).thenReturn((double) 8);
+		
+		List<Muestra> muestras = Arrays.asList(muestra1, muestra2, muestra3);
+		assertEquals(bernal.lasMuestrasQueEstanDentroDeLaZona(muestras).size(), 2);
+		assertFalse(bernal.lasMuestrasQueEstanDentroDeLaZona(muestras).contains(muestra3));
+
+	}
+	
+	@Test
+	void unaZonaDeCoberturaPuedeSaberLasZonasConLasQueSeSolapa() {
+		List<ZonaDeCobertura> listaDeZonas = Arrays.asList(wilde, partidoDeTandil);
+		assertEquals(bernal.zonasConLasQueSeSolapa(listaDeZonas).size(), 1);
+		assertTrue(bernal.zonasConLasQueSeSolapa(listaDeZonas).contains(wilde));
+		assertFalse(bernal.zonasConLasQueSeSolapa(listaDeZonas).contains(partidoDeTandil));
 	}
 }
