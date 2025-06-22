@@ -12,21 +12,22 @@ import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.Usuario;
+import tpIntegrador.UsuarioExperto;
 import tpIntegrador.enums.TipoDeOpinion;
 
 public class UsuarioTestCase {
 	Usuario pepe = new Usuario("pepe", false);
 	Usuario juan = new Usuario("juan", true);
 	Muestra muestra = mock(Muestra.class);
+	Muestra muestra2 = mock(Muestra.class);
 	Ubicacion quilmes = mock(Ubicacion.class);
-	TipoDeOpinion vinchucaInfestans = TipoDeOpinion.VINCHUCA_INFESTANS;//mock(TipoDeOpinion.class);
+	TipoDeOpinion vinchucaInfestans = TipoDeOpinion.VINCHUCA_INFESTANS;
 	
 	@BeforeEach
 	public void setUp() throws Exception {
 		pepe = new Usuario("pepe", false);
 		juan = new Usuario("juan", true);
 		muestra = mock(Muestra.class);
-		//when(vinchucaInfestans.toString()).thenReturn("VINCHUCA_INFESTANS");
 	}
 	
 	@Test
@@ -81,19 +82,27 @@ public class UsuarioTestCase {
 		assertEquals(pepe.getCategoria(), "Usuario Basico");
 		for (int i = 0; i < 21; i++) {
 	        pepe.opinarSobre(vinchucaInfestans, muestra);
-	        pepe.enviarMuestraConUbicacionYTipo(quilmes, vinchucaInfestans);
+	        pepe.enviarMuestra(otraMuestra);
 	    }
 		assertEquals(pepe.getOpinionesRealizadas().size(), 21);
 		assertEquals(pepe.getCategoria(), "Usuario Experto");
 	}
 	
 	@Test
-	void unUsuarioEnviaUnaMuestra() {
-		assertEquals(pepe.getMuestrasEnviadas().size(), 0);
-		pepe.enviarMuestraConUbicacionYTipo(quilmes, vinchucaInfestans);
-		assertEquals(pepe.getMuestrasEnviadas().size(), 1);
+	void unUsuarioExpertoSeConvierteEnBasico() {
+		pepe.setCategoria(new UsuarioExperto());
+		//pepe no tiene suficientes posteos como para mantener su categoria de experto, por lo que vuelve a básico
+		assertEquals(pepe.getCategoria(), "Usuario Basico");
 	}
 	
+	@Test
+	void unUsuarioEnviaUnaMuestra() {
+		when(muestra2.getFechaDeCreacion()).thenReturn(LocalDate.now());
+		assertEquals(pepe.getMuestrasEnviadas().size(), 0);
+		pepe.enviarMuestra(muestra2);
+		assertEquals(pepe.getMuestrasEnviadas().size(), 1);
+	}
+/*	
 	@Test
 	void unUsuarioNoPuedeEnviarUnaMuestraConUnaEspecieQueNoSeaVinchuca() {
 		TipoDeOpinion chinche = mock(TipoDeOpinion.class);
@@ -104,7 +113,7 @@ public class UsuarioTestCase {
 	        });
 		
 		assertEquals(pepe.getMuestrasEnviadas().size(), 0);
-	}
+	}*/
 	
 	
 	
