@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import tpIntegrador.FiltroMuestra;
+import tpIntegrador.FiltroTipoDeInsecto;
 import tpIntegrador.GestorDeMuestras;
 import tpIntegrador.Muestra;
 import tpIntegrador.Ubicacion;
@@ -29,6 +31,7 @@ public class GestorDeMuestrasTestCase {
 		when(unaMuestra.getUbicacion()).thenReturn(unq);
 		when(unaMuestra.getUsuarioCreadorDeMuestra()).thenReturn(unUsuario);
 		when(otraMuestra.getUbicacion()).thenReturn(unq);
+		when(otraMuestra.getUsuarioCreadorDeMuestra()).thenReturn(unUsuario);
 	}
 	
 	@Test
@@ -58,5 +61,16 @@ public class GestorDeMuestrasTestCase {
 		unGestorDeMuestras.agregarMuestra(unaMuestra);
 		unGestorDeMuestras.lasMuestrasAMenosDe_KmDe(10, otraMuestra);
 		verify(unq, times(1)).estaAMenosDe_KmDe(10, otraMuestra.getUbicacion());
+	}
+	
+	@Test
+	void unGestorDeMuestrasPuedeIniciarUnaBusqueda() {
+		FiltroTipoDeInsecto filtro = mock(FiltroTipoDeInsecto.class);
+		when(filtro.cumple(unaMuestra)).thenReturn(true);
+		when(filtro.cumple(otraMuestra)).thenReturn(false);
+		unGestorDeMuestras.agregarMuestra(unaMuestra);
+		unGestorDeMuestras.agregarMuestra(otraMuestra);
+		assertTrue(unGestorDeMuestras.realizarBusquedaDeMuestrasConFiltro(filtro).contains(unaMuestra));
+		assertFalse(unGestorDeMuestras.realizarBusquedaDeMuestrasConFiltro(filtro).contains(otraMuestra));
 	}
 }

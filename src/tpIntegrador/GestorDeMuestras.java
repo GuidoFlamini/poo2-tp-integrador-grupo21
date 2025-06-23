@@ -42,5 +42,10 @@ public class GestorDeMuestras {
 		return muestras.stream().filter(muestra -> ubicacionDeLaMuestra.estaAMenosDe_KmDe(distanciaEnKm, muestra.getUbicacion())).toList();
 	}
 
+	//PRUEBA
 	
+	public List<Muestra> realizarBusquedaDeMuestrasConFiltro(FiltroMuestra filtro) {
+		BusquedaDeMuestra nuevaBusqueda = new BusquedaDeMuestra(muestras, filtro);
+		return nuevaBusqueda.getResultados();
+	}
 }
