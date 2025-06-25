@@ -14,22 +14,15 @@ public class Muestra {
     private List<Opinion> opiniones;
     private Usuario usuarioCreadorDeMuestra;
 
-    public Muestra(String foto, Ubicacion ubicacion, Usuario usuarioCreadorDeMuestra) {
-        this.foto = foto;
-        this.ubicacion = ubicacion;
-        this.fechaDeCreacion = LocalDate.now();
-        this.nombresDeUsuario = new ArrayList<>();
-        this.opiniones = new ArrayList<>();
-        this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
-    }
     
-    public Muestra(Ubicacion ubicacion, TipoDeOpinion tipoDeVinchuca, Usuario usuarioCreadorDeMuestra) {
+
+public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDeMuestra) {
     	this.foto = "fotoDeLaMuestra";
         this.ubicacion = ubicacion;
         this.fechaDeCreacion = LocalDate.now();
         this.nombresDeUsuario = new ArrayList<>();
         nombresDeUsuario.add(usuarioCreadorDeMuestra.getNombre());
-        Opinion opinionInicial = new Opinion(usuarioCreadorDeMuestra, tipoDeVinchuca);
+        Opinion opinionInicial = new Opinion(usuarioCreadorDeMuestra, tipo);
         this.opiniones = new ArrayList<>();
         opiniones.add(opinionInicial);
         this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
@@ -62,12 +55,6 @@ public class Muestra {
     public String getNombreDeUsuarioCreador() {
     	return usuarioCreadorDeMuestra.getNombre();
     }
-
-
-    /*
-    public void agregarOpinion(Opinion opinion) {  // ¿Por qué no de tipo List<Opinion>?
-    	getOpiniones().add(opinion);
-    } */
     
     public void agregarOpinion(Opinion opinion) {
     	if(elUsuarioYaOpino(opinion.getNombreDeUsuario())) {
@@ -83,16 +70,8 @@ public class Muestra {
     }
 
     public boolean hayOpinionesDeExpertos() {
-        return getOpiniones().stream().anyMatch(Opinion::esOpinionDeExperto);
+        return getOpiniones().stream().anyMatch(opinion -> opinion.esOpinionDeExperto());
     }
-
-        
-    //public void getTipoDeOpinion(List<Opinion> getOpiniones) {
-    //    getOpiniones.stream().forEach(opinion -> opinion.getTipo());
-    //}
-    // Recorre la lista de opiniones usando un stream.
-    // Para cada opinion, llama a getTipo().  
-    // Pero no hace nada con el resultado de getTipo(). Simplemente lo obtiene y lo descarta.
 
 
     public List<TipoDeOpinion> getTiposDeOpinion() {
