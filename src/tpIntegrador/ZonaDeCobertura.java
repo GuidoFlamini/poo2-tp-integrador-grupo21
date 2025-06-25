@@ -8,11 +8,13 @@ public class ZonaDeCobertura {
 	String nombre;
 	Ubicacion epicentro;
 	double radio; //en kilometros
+	List<Observer> observadores;
 
 	public ZonaDeCobertura(String nombre, Ubicacion epicentro, double radio) {
 		this.nombre = nombre;
 		this.epicentro = epicentro;
 		this.radio = radio;
+		this.observadores = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -58,5 +60,7 @@ public class ZonaDeCobertura {
 		return zonasConLasQueSeSolapa;
 	}
 	
-
+	public void agregarObservador(Observer observador) {
+	   	observadores.add(observador);
+    }
 }
