@@ -41,6 +41,8 @@ public class ZonaDeCobertura {
 		}
 		return muestrasDentroDeLaZona;
 	}
+	
+	
 
 	private boolean laMuestraEstaDentroDeLaZona(Muestra muestra) {
 		return (epicentro.distanciaEnKmA(muestra.getUbicacion()) < radio);
@@ -55,5 +57,6 @@ public class ZonaDeCobertura {
 		}
 		return zonasConLasQueSeSolapa;
 	}
+	
 
 }

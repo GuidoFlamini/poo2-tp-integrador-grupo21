@@ -125,8 +125,8 @@ public class Muestra {
     }
 
 
-    public void resultadoActual() {  // Con las opiniones que hay, cual es el tipo mas votado. (osea, cual aparece mas veces)
-            getTiposDeOpinion().stream()
+    public TipoDeOpinion resultadoActual() {  // Con las opiniones que hay, cual es el tipo mas votado. (osea, cual aparece mas veces)
+            return getTiposDeOpinion().stream()
                 .collect(Collectors.groupingBy(
                     tipo -> tipo,                   // clave: TipoDeOpinion
                     Collectors.counting()           // valor: cantidad de veces que aparece
@@ -138,6 +138,27 @@ public class Muestra {
                 .max(Map.Entry.comparingByValue())  // el que tenga la cantidad más grande
                 .map(Map.Entry::getKey)             // devolver solo el TipoDeOpinion
                 .orElse(null);                // si no hay opiniones, devuelve null
-    } 
+    }
+
+	public String getNivelDeValidacion() {
+		if(esMuestraVerificada()) {
+			return "Verificada";
+		} else {
+			return "Votada";
+		}
+	}
+
+	public Opinion laOpinionMasReciente() {
+		//Precondición: opiniones no puede ser vacía
+		Opinion masReciente = opiniones.get(0);
+
+		for (Opinion op : opiniones) {
+		    if (op.getFecha().isAfter(masReciente.getFecha())) {
+		        masReciente = op;
+		    }
+		}
+		
+		return masReciente;
+	} 
 }
 

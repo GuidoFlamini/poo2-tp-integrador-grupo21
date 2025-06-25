@@ -2,6 +2,7 @@ package tpIntegrador;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Ubicacion {
 
@@ -43,7 +44,7 @@ public class Ubicacion {
 	}
 	
 	public List<Ubicacion> lasQueEstanAMenosDe_Km(List<Ubicacion> ubicaciones, double distanciaLimite){
-		List<Ubicacion> nuevaLista = ubicaciones.stream().filter(ubicacion -> this.distanciaEnKmA(ubicacion)<distanciaLimite).toList();
+		List<Ubicacion> nuevaLista = ubicaciones.stream().filter(ubicacion -> this.estaAMenosDe_KmDe(distanciaLimite, ubicacion)).toList();
 		return nuevaLista;
 	}
 /*	
@@ -55,4 +56,8 @@ public class Ubicacion {
 			}
 		}
 	}*/
+
+	public boolean estaAMenosDe_KmDe(double distanciaLimite, Ubicacion otraUbicacion) {
+		return this.distanciaEnKmA(otraUbicacion)<distanciaLimite;
+	}
 }
