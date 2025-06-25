@@ -12,11 +12,12 @@ public class Opinion {
         this.usuario = usuario;
         this.tipo = tipo;
         this.fechaDeCreacion = LocalDate.now();
-        this.esOpinionDeExperto = usuario.getCategoria() == "Usuario Experto";
+        this.esOpinionDeExperto = (usuario.getCategoria() == "Usuario Experto");
     }
 
     public boolean esOpinionDeExperto() {         
-        return esOpinionDeExperto;
+    	esOpinionDeExperto = (usuario.getCategoria() == "Usuario Experto");
+    	return esOpinionDeExperto;
     }
 
     public TipoDeOpinion getTipo() { // ( Vinchuca, Chinche Foliada, Phtia-Chinche, Ninguna, Imagen poco clara.)

@@ -9,9 +9,11 @@ public class GestorDeMuestras {
 	//La idea es que esta clase tenga todas las muestras del sistema
 	
 	List<Muestra> muestras;
+	GestorDeZonas zonasDeCobertura;
 	
-	public GestorDeMuestras() {
+	public GestorDeMuestras(GestorDeZonas zonasDeCobertura) {
 		muestras = new ArrayList<>();
+		this.zonasDeCobertura = zonasDeCobertura;
 	}
 	
 	public void agregarMuestraDeTipoYUbicacionYUsuario(TipoDeOpinion tipoDeVinchuca, Ubicacion ubicacionDeLaMuestra, Usuario usuarioCreador) {
@@ -27,6 +29,10 @@ public class GestorDeMuestras {
 	public void agregarMuestra(Muestra nuevaMuestra) {
 		nuevaMuestra.getUsuarioCreadorDeMuestra().enviarMuestra(nuevaMuestra);
 		muestras.add(nuevaMuestra);
+		List <ZonaDeCobertura>listaDeZonas = zonasDeCobertura.getZonas();
+		for(ZonaDeCobertura zona : listaDeZonas) {
+			zona.agregarMuestra(); // sólo va agregar la muestra si ésta se encuentra dentro de la zona
+		}
 	}
 	
 	public List<Muestra> getMuestras(){
