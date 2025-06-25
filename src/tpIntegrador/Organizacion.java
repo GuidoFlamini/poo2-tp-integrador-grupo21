@@ -72,14 +72,6 @@ public class Organizacion implements Observer {  // implements o extens??
     }
 
 
-    //public void agregarObservador(Observer observador) {
-    //    observers.add(observador);
-    //}
-    // Se tiene que agregar este metodo en zona de Cobertura.
-
-
-
-
     public void agregarEmpleados(int cantidad) {
         if (cantidad < 0) {
             throw new IllegalArgumentException("La cantidad debe ser positiva");
