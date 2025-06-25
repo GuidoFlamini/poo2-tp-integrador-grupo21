@@ -70,18 +70,20 @@ public class MuestraTestCase {
         muestra2.agregarOpinion(opinion3);
         muestra2.agregarOpinion(opinion4);
 
-        assertTrue(muestra2.esMuestraVerificada());
         when(muestra2.resultadoActual()).thenReturn(chincheFolida);
+        assertTrue(muestra2.esMuestraVerificada());
+        
 
     }
 
     @Test
     void existenLosDatosDeLaMuestra() {
-        assertEquals(muestra1.getUbicacion(), sarandi);
-        assertEquals(muestra1.getTiposDeOpinion(), Arrays.asList(vinchucaInfestans));
-        assertEquals(muestra1.getUsuarioCreadorDeMuestra(), manuel);
-        
         when(manuel.getNombre()).thenReturn("Manuel");
         when(muestra1.resultadoActual()).thenReturn(vinchucaInfestans);
+        
+        
+        assertEquals(muestra1.getUbicacion(), sarandi);
+        assertEquals(muestra1.getTiposDeOpinion(), Arrays.asList(vinchucaInfestans));
+        assertEquals(muestra1.getUsuarioCreadorDeMuestra(), manuel);  
     }
 }

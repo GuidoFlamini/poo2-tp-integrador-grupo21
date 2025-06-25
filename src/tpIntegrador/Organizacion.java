@@ -9,6 +9,7 @@ public class Organizacion implements Observer {  // implements o extens??
     private Ubicacion ubicacion;
     private TipoDeOrganizacion tipo; // (salud, educativa, cultural, asistencia)
     private int cantDeEmpleados;
+    private List<Muestra> historialDeMuestras;
     private List<ZonaDeCobertura> zonasRegistradas;
     private FuncionalidadExterna funcionalidadNuevaMuestra;
     private FuncionalidadExterna funcionalidadValidacion;
@@ -20,6 +21,7 @@ public class Organizacion implements Observer {  // implements o extens??
         this.tipo = tipo;
         this.cantDeEmpleados = cantDeEmpleados;
         this.zonasRegistradas = new ArrayList<>();
+        this.historialDeMuestras = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -42,6 +44,10 @@ public class Organizacion implements Observer {  // implements o extens??
          return zonasRegistradas;
     }
 
+    public List<Muestra> getHistorialDeMuestras() {
+         return historialDeMuestras;
+    }
+
 
     @Override
     public void nuevaMuestra(Muestra muestra) {
@@ -59,6 +65,10 @@ public class Organizacion implements Observer {  // implements o extens??
 
     public void registrarEnZona(ZonaDeCobertura zona) {
         zonasRegistradas.add(zona);
+    }
+
+    public void registrarMuestra(Muestra muestra) {
+        historialDeMuestras.add(muestra);
     }
 
 
