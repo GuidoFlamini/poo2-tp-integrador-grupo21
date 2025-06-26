@@ -27,12 +27,17 @@ public class GestorDeMuestras {
 	}
 	
 	public void agregarMuestra(Muestra nuevaMuestra) {
-		nuevaMuestra.getUsuarioCreadorDeMuestra().enviarMuestra(nuevaMuestra);
-		muestras.add(nuevaMuestra);
-		List <ZonaDeCobertura>listaDeZonas = zonasDeCobertura.getZonas();
-		for(ZonaDeCobertura zona : listaDeZonas) {
-			zona.agregarMuestra(); // sólo va agregar la muestra si ésta se encuentra dentro de la zona
+		if(nuevaMuestra.laOpinionMasReciente().toString().startsWith("VINCHUCA")) {
+			nuevaMuestra.getUsuarioCreadorDeMuestra().enviarMuestra(nuevaMuestra);
+			muestras.add(nuevaMuestra);
+			List <ZonaDeCobertura>listaDeZonas = zonasDeCobertura.getZonas();
+			for(ZonaDeCobertura zona : listaDeZonas) {
+				zona.agregarMuestra(); // sólo va agregar la muestra si ésta se encuentra dentro de la zona
+			}
+		}else {
+			throw new IllegalArgumentException("No se puede subir una muestra cuya especie no sea vinchuca");
 		}
+		
 	}
 	
 	public List<Muestra> getMuestras(){
