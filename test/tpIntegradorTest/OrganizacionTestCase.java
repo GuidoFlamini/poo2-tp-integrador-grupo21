@@ -15,6 +15,7 @@ import tpIntegrador.Organizacion;
 import tpIntegrador.enums.TipoDeOrganizacion;
 
 public class OrganizacionTestCase {
+<<<<<<< gestorDeMuestras-y-gestorDeZonas
 	
 	Organizacion organizacion = new Organizacion("ONG", new Ubicacion(1, 1), TipoDeOrganizacion.SALUD, 100);
     Muestra muestra = mock(Muestra.class);
@@ -22,6 +23,11 @@ public class OrganizacionTestCase {
     ZonaDeCobertura zonaDeCobertura2 = mock(ZonaDeCobertura.class);
 	
 /*
+=======
+
+    
+
+>>>>>>> main
     @Test
     public void testNotificaNuevaMuestra() {
 

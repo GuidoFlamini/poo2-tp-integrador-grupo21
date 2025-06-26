@@ -13,6 +13,7 @@ public class Muestra {
     private List<String> nombresDeUsuario;
     private List<Opinion> opiniones;
     private Usuario usuarioCreadorDeMuestra;
+    private List<ObserverDeZonaDeCobertura> observadores;
 
     
 
@@ -26,6 +27,7 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
         this.opiniones = new ArrayList<>();
         opiniones.add(opinionInicial);
         this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
+        this.observadores = new ArrayList<>();
     }
 
     public LocalDate getFechaDeCreacion() {
@@ -57,11 +59,24 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     }
     
     public void agregarOpinion(Opinion opinion) {
-    	if(elUsuarioYaOpino(opinion.getNombreDeUsuario())) {
-    		throw new IllegalArgumentException("No puedes opinar dos veces sobre la misma muestra");
+    	if(elUsuarioYaOpino(opinion.getNombreDeUsuario()) || esMuestraVerificada() ) {
+    		throw new IllegalArgumentException("No puedes opinar dos veces sobre la misma muestra o es la muestra está verificada.");
     	} else {
     		nombresDeUsuario.add(opinion.getNombreDeUsuario());
     		opiniones.add(opinion);
+            verificarMuestra();
+        }
+    }
+        
+    public void verificarMuestra() {
+        if (esMuestraVerificada()){
+            notificarVerificada();
+        }
+    }
+
+    private void notificarVerificada() {
+        for (ObserverDeZonaDeCobertura observador : observadores) {
+            observador.muestraFueVerificada(this);
     	}
     }
     
@@ -81,13 +96,13 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 }
 
 
-
-    private List<Opinion> getOpinionesDeExperto() {
-        return getOpiniones().stream()
-                                .filter(opinion -> opinion.esOpinionDeExperto())
-                                .collect(Collectors.toList());
-    }   
-
+    public String getNivelDeValidacion() {
+		if(esMuestraVerificada()) {
+			return "Verificada";
+		} else {
+			return "Votada";
+		}
+	}
 
 
     public boolean esMuestraVerificada() { //  Para que la muestra quede verificada, deben coincidir dos expertos en su opinión
@@ -97,11 +112,19 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
                             opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
                             Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
                         .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
-                        .anyMatch(cantidad -> cantidad >= 2);   // Esto nos dice si hay algún elemento que se repite al menos 2 veces
+                       .anyMatch(cantidad -> cantidad >= 2);   // Esto nos dice si hay algún elemento que se repite al menos 2 veces
         } else {
             return false;
         }
     }
+
+    private List<Opinion> getOpinionesDeExperto() {
+        return getOpiniones().stream()
+                                .filter(opinion -> opinion.esOpinionDeExperto())
+                                .collect(Collectors.toList());
+    } 
+
+
 
 
     public TipoDeOpinion resultadoActual() {  // Con las opiniones que hay, cual es el tipo mas votado. (osea, cual aparece mas veces)
@@ -110,22 +133,12 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
                     tipo -> tipo,                   // clave: TipoDeOpinion
                     Collectors.counting()           // valor: cantidad de veces que aparece
             ))
-
-            //revisar a partir de acá.
-
                 .entrySet().stream()                // stream de pares (TipoDeOpinion, cantidad)
                 .max(Map.Entry.comparingByValue())  // el que tenga la cantidad más grande
                 .map(Map.Entry::getKey)             // devolver solo el TipoDeOpinion
                 .orElse(null);                // si no hay opiniones, devuelve null
     }
 
-	public String getNivelDeValidacion() {
-		if(esMuestraVerificada()) {
-			return "Verificada";
-		} else {
-			return "Votada";
-		}
-	}
 
 	public Opinion laOpinionMasReciente() {
 		//Precondición: opiniones no puede ser vacía

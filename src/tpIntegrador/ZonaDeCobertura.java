@@ -1,18 +1,23 @@
 package tpIntegrador;
 
 import java.util.List;
+import java.util.Observer;
 import java.util.ArrayList;
 
-public class ZonaDeCobertura {
+public class ZonaDeCobertura implements ObserverDeZonaDeCobertura{
 	
 	String nombre;
 	Ubicacion epicentro;
 	double radio; //en kilometros
+	List<ObserverDeOrganizacion> observadores;
+	List<Muestra> muestras;
 
 	public ZonaDeCobertura(String nombre, Ubicacion epicentro, double radio) {
 		this.nombre = nombre;
 		this.epicentro = epicentro;
 		this.radio = radio;
+		this.observadores = new ArrayList<>();
+		this.muestras = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -25,6 +30,14 @@ public class ZonaDeCobertura {
 
 	public double getRadio() {
 		return radio;
+	}
+
+	public List<ObserverDeOrganizacion> getObservadores() {
+		return observadores;
+	}
+
+	public List<Muestra> getMuestras() {
+		return muestras;
 	}
 
 	public boolean seSolapaCon(ZonaDeCobertura otraZonaDeCobertura) {
@@ -58,5 +71,34 @@ public class ZonaDeCobertura {
 		return zonasConLasQueSeSolapa;
 	}
 	
+	public void agregarObservador(ObserverDeOrganizacion observador) {
+	   	observadores.add(observador);
+    }
 
+	public void agregarMuestras(Muestra muestra) {
+		if (laMuestraEstaDentroDeLaZona(muestra)) {
+			muestras.add(muestra);
+    	    notificarNuevaMuestra(muestra);
+        } 
+    }
+
+    
+    private void notificarNuevaMuestra(Muestra muestra) {  // notificar a los observadores sobre nueva muestra
+        for (ObserverDeOrganizacion observador : observadores) {
+            observador.nuevaMuestra(this, muestra);
+        }
+    }
+
+  
+    private void notificarMuestraVerificada(Muestra muestra) {  // notificar a los observadores sobre muestra verificada
+        for (ObserverDeOrganizacion observador : observadores) {
+            observador.muestraVerificada(this, muestra);
+        }
+    }
+
+	@Override
+    public void muestraFueVerificada(Muestra muestra) {
+        notificarMuestraVerificada(muestra);
+    }
 }
+
