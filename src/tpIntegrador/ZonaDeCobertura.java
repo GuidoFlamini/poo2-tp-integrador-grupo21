@@ -1,14 +1,15 @@
 package tpIntegrador;
 
 import java.util.List;
+import java.util.Observer;
 import java.util.ArrayList;
 
-public class ZonaDeCobertura {
+public class ZonaDeCobertura implements ObserverDeZonaDeCobertura{
 	
 	String nombre;
 	Ubicacion epicentro;
 	double radio; //en kilometros
-	List<Observer> observadores;
+	List<ObserverDeOrganizacion> observadores;
 	List<Muestra> muestras;
 
 	public ZonaDeCobertura(String nombre, Ubicacion epicentro, double radio) {
@@ -31,7 +32,7 @@ public class ZonaDeCobertura {
 		return radio;
 	}
 
-	public List<Observer> getObservadores() {
+	public List<ObserverDeOrganizacion> getObservadores() {
 		return observadores;
 	}
 
@@ -70,32 +71,34 @@ public class ZonaDeCobertura {
 		return zonasConLasQueSeSolapa;
 	}
 	
-	public void agregarObservador(Observer observador) {
+	public void agregarObservador(ObserverDeOrganizacion observador) {
 	   	observadores.add(observador);
     }
 
 	public void agregarMuestras(Muestra muestra) {
-		if (laMuestraEstaDentroDeLaZona(muestra) && muestra.esMuestraVerificada()) {
+		if (laMuestraEstaDentroDeLaZona(muestra)) {
 			muestras.add(muestra);
-    	    notificarMuestraVerificada(muestra);
-        } else if (laMuestraEstaDentroDeLaZona(muestra)){
-			muestras.add(muestra);
-			notificarNuevaMuestra(muestra);
-		}
+    	    notificarNuevaMuestra(muestra);
+        } 
     }
 
     
-    private void notificarNuevaMuestra(Muestra muestra) { // notificar a los observadores sobre nueva muestra
-        for (Observer observador : observadores) {
+    private void notificarNuevaMuestra(Muestra muestra) {  // notificar a los observadores sobre nueva muestra
+        for (ObserverDeOrganizacion observador : observadores) {
             observador.nuevaMuestra(this, muestra);
         }
     }
 
   
     private void notificarMuestraVerificada(Muestra muestra) {  // notificar a los observadores sobre muestra verificada
-        for (Observer observador : observadores) {
+        for (ObserverDeOrganizacion observador : observadores) {
             observador.muestraVerificada(this, muestra);
         }
+    }
+
+	@Override
+    public void muestraFueVerificada(Muestra muestra) {
+        notificarMuestraVerificada(muestra);
     }
 }
 

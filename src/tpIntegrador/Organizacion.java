@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import tpIntegrador.enums.TipoDeOrganizacion;
 
-public class Organizacion implements Observer {  
+public class Organizacion implements ObserverDeOrganizacion {  
     private String nombre; 
     private Ubicacion ubicacion;
     private TipoDeOrganizacion tipo; // (salud, educativa, cultural, asistencia)
