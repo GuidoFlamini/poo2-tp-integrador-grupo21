@@ -11,10 +11,7 @@ public class BusquedaDeMuestra {
 		this.filtro = filtro;
 		this.muestrasABuscar = muestrasABuscar;
 	}
-	
-/*	public void agregarFiltro(FiltroMuestra nuevoFiltro) {
-		filtros.add(nuevoFiltro);
-	}*/
+
 	
 	public List<Muestra> getResultados(){
 		return muestrasABuscar.stream().filter(muestra -> filtro.cumple(muestra)).toList();
