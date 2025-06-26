@@ -13,6 +13,7 @@ public class Muestra {
     private List<String> nombresDeUsuario;
     private List<Opinion> opiniones;
     private Usuario usuarioCreadorDeMuestra;
+    private MuestraState estado;
 
     
 
@@ -26,6 +27,7 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
         this.opiniones = new ArrayList<>();
         opiniones.add(opinionInicial);
         this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
+        this.estado = new MuestraNoVerificada();
     }
 
     public LocalDate getFechaDeCreacion() {
@@ -81,27 +83,48 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 }
 
 
+    public boolean esMuestraVerificada() {
+        return estado.esVerificada();
+    }
+
+    //public boolean esMuestraVerificada() { //  Para que la muestra quede verificada, deben coincidir dos expertos en su opinión
+    //      if (hayOpinionesDeExpertos())   {
+    //        return getOpinionesDeExperto().stream()
+    //                    .collect(Collectors.groupingBy(
+    //                        opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
+    //                        Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
+    //                    .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
+    //                    .anyMatch(cantidad -> cantidad >= 2);   // Esto nos dice si hay algún elemento que se repite al menos 2 veces
+    //    } else {
+    //        return false;
+    //    }
+    //}
 
     private List<Opinion> getOpinionesDeExperto() {
         return getOpiniones().stream()
                                 .filter(opinion -> opinion.esOpinionDeExperto())
                                 .collect(Collectors.toList());
-    }   
+    } 
+
+    
+
+    private void actualizarEstadoDeMuestra() {
+		if(getOpinionesDeExperto().size() >= 2) {
+            this.estado = new MuestraVerificada();
+		} else {
+			this.estado = new MuestraNoVerificada();
+		}
+	}
 
 
+    //public void verificar() {
+    //    this.estado = new MuestraVerificada();
+    //}
 
-    public boolean esMuestraVerificada() { //  Para que la muestra quede verificada, deben coincidir dos expertos en su opinión
-          if (hayOpinionesDeExpertos())   {
-            return getOpinionesDeExperto().stream()
-                        .collect(Collectors.groupingBy(
-                            opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
-                            Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
-                        .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
-                        .anyMatch(cantidad -> cantidad >= 2);   // Esto nos dice si hay algún elemento que se repite al menos 2 veces
-        } else {
-            return false;
-        }
-    }
+    //public void desverificar() {
+    //    this.estado = new MuestraNoVerificada();
+    //}
+
 
 
     public TipoDeOpinion resultadoActual() {  // Con las opiniones que hay, cual es el tipo mas votado. (osea, cual aparece mas veces)
