@@ -32,7 +32,7 @@ public class GestorDeMuestras {
 			muestras.add(nuevaMuestra);
 			List <ZonaDeCobertura>listaDeZonas = zonasDeCobertura.getZonas();
 			for(ZonaDeCobertura zona : listaDeZonas) {
-				zona.agregarMuestra(); // sólo va agregar la muestra si ésta se encuentra dentro de la zona
+				zona.agregarMuestra(nuevaMuestra); // sólo va agregar la muestra si ésta se encuentra dentro de la zona
 			}
 		}else {
 			throw new IllegalArgumentException("No se puede subir una muestra cuya especie no sea vinchuca");
