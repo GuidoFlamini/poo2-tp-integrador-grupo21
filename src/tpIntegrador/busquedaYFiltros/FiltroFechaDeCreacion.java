@@ -1,6 +1,8 @@
-package tpIntegrador;
+package tpIntegrador.busquedaYFiltros;
 
 import java.time.LocalDate;
+
+import tpIntegrador.Muestra;
 
 public class FiltroFechaDeCreacion extends FiltroMuestra {
 	

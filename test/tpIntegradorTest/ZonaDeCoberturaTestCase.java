@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import tpIntegrador.Muestra;
+import tpIntegrador.Organizacion;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
 
@@ -27,6 +28,9 @@ public class ZonaDeCoberturaTestCase {
 	@BeforeEach
 	void setUp() {
 		when(unq.distanciaEnKmA(tandil)).thenReturn((double) 400);
+		when(muestra1.getUbicacion()).thenReturn(lasFlores);
+		when(muestra2.getUbicacion()).thenReturn(unq);
+		when(muestra3.getUbicacion()).thenReturn(tandil);	
 	}
 	
 	@Test
@@ -55,9 +59,7 @@ public class ZonaDeCoberturaTestCase {
 	
 	@Test
 	void unaZonaDeCoberturaPuedeSaberLasMuestrasQueSeEncuentranDentroDeElla() {
-		when(muestra1.getUbicacion()).thenReturn(lasFlores);
-		when(muestra2.getUbicacion()).thenReturn(unq);
-		when(muestra3.getUbicacion()).thenReturn(tandil);		
+			
 		when(unq.distanciaEnKmA(unq)).thenReturn((double) 0);
 		when(unq.distanciaEnKmA(lasFlores)).thenReturn((double) 8);
 		
@@ -73,5 +75,36 @@ public class ZonaDeCoberturaTestCase {
 		assertEquals(bernal.zonasConLasQueSeSolapa(listaDeZonas).size(), 1);
 		assertTrue(bernal.zonasConLasQueSeSolapa(listaDeZonas).contains(wilde));
 		assertFalse(bernal.zonasConLasQueSeSolapa(listaDeZonas).contains(partidoDeTandil));
+	}
+	
+	@Test
+	void unaZonaDeCoberturaRegistraUnaMuestraSiEstaDEntroDeSuRadio() {
+		bernal.agregarMuestra(muestra1);
+		bernal.agregarMuestra(muestra3);
+		assertTrue(bernal.getMuestras().contains(muestra1));
+		assertFalse(bernal.getMuestras().contains(muestra3));
+	}
+	
+	@Test
+	void cuandoUnaZonaDeCoberturaAgregaUnaMuestraSeSuscribeComoObserverAMuestra() {
+		bernal.agregarMuestra(muestra1);
+		verify(muestra1, times(1)).agregarObserver(bernal);
+	}
+	
+	@Test
+	void cuandoUnaZonaDeCoberturaAgregaUnaMuestraSeNotificaALasOrganizacionesQueSeHayanRegistrado() {
+		Organizacion orga1 = mock(Organizacion.class);
+		bernal.agregarObservador(orga1);
+		bernal.agregarMuestra(muestra1);
+		verify(orga1, times(1)).nuevaMuestra(bernal, muestra1);
+	}
+	
+	@Test
+	void cuandoUnaZonaDeCoberturaSeEnteraDeLaVerificacionDeUnaMuestraNotificaALasOrganizacionesQueSeHayanRegistrado() {
+		Organizacion orga1 = mock(Organizacion.class);
+		bernal.agregarObservador(orga1);
+		bernal.agregarMuestra(muestra1);
+		bernal.notificarMuestraVerificada(muestra1);
+		verify(orga1, times(1)).muestraVerificada(bernal, muestra1);
 	}
 }

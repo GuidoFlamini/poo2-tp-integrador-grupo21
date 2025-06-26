@@ -2,5 +2,5 @@ package tpIntegrador;
 
 
 interface ObserverDeZonaDeCobertura {
-    void muestraFueVerificada(Muestra muestra);
+    void muestraFueVerificada(Muestra muestra); //update
 }

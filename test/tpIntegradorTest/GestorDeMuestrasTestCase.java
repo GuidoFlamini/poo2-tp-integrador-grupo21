@@ -4,16 +4,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpIntegrador.FiltroMuestra;
-import tpIntegrador.FiltroTipoDeInsecto;
 import tpIntegrador.GestorDeMuestras;
 import tpIntegrador.GestorDeZonas;
 import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
 import tpIntegrador.Ubicacion;
-import tpIntegrador.Usuario;
 import tpIntegrador.ZonaDeCobertura;
+import tpIntegrador.busquedaYFiltros.FiltroMuestra;
+import tpIntegrador.busquedaYFiltros.FiltroTipoDeInsecto;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
 
 import static org.mockito.Mockito.*;
 

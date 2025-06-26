@@ -1,5 +1,7 @@
-package tpIntegrador;
+package tpIntegrador.usuario;
 
+import tpIntegrador.Muestra;
+import tpIntegrador.Opinion;
 import tpIntegrador.enums.TipoDeOpinion;
 
 public class UsuarioBasico extends UsuarioState {

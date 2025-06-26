@@ -1,8 +1,8 @@
 package tpIntegradorTest;
 
 import tpIntegrador.Opinion;
-import tpIntegrador.Usuario;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;

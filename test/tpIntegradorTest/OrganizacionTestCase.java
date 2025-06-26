@@ -8,11 +8,11 @@ import static org.mockito.Mockito.*;
 import tpIntegrador.FuncionalidadExterna;
 import tpIntegrador.Muestra;
 import tpIntegrador.Ubicacion;
-import tpIntegrador.Usuario;
 import tpIntegrador.ZonaDeCobertura;
 import tpIntegrador.Opinion;
 import tpIntegrador.Organizacion;
 import tpIntegrador.enums.TipoDeOrganizacion;
+import tpIntegrador.usuario.Usuario;
 
 public class OrganizacionTestCase {
 	
@@ -21,36 +21,6 @@ public class OrganizacionTestCase {
     ZonaDeCobertura zonaDeCobertura1 = mock(ZonaDeCobertura.class);
     ZonaDeCobertura zonaDeCobertura2 = mock(ZonaDeCobertura.class);
 	
-/*
-
-    @Test
-    public void testNotificaNuevaMuestra() {
-
-        FuncionalidadExterna func = mock(FuncionalidadExterna.class);
-        Organizacion organizacion = new Organizacion("ONG", new Ubicacion(1, 1), TipoDeOrganizacion.SALUD, 100);
-        Muestra muestra = mock(Muestra.class);
-
-
-        organizacion.nuevaMuestra(muestra);
-
-        verify(func, times(1)).nuevoEvento(organizacion, null, muestra); //verificamos que la funcionalidad fue llamada
-    } 
-
-    // En teoria con Mockito anda.
-
-    @Test
-    public void testMuestraNoVerificadaNoNotifica() {
-        FuncionalidadExterna func = mock(FuncionalidadExterna.class);
-        Muestra muestra = mock(Muestra.class);
-        when(muestra.esMuestraVerificada()).thenReturn(false);
-
-        Organizacion org = new Organizacion("ONG", new Ubicacion(1, 1), TipoDeOrganizacion.SALUD, 100);
-
-        org.muestraVerificada(muestra);
-
-        verify(func, never()).nuevoEvento(any(), any(), any()); // Al no estar verificada no debería llamar a la funcion.
-    }*/
-
 
     @Test
     void unaOrganizacionRegistraUnaMuestra() {
@@ -66,6 +36,15 @@ public class OrganizacionTestCase {
     	organizacion.registrarEnZona(zonaDeCobertura2);
     	assertTrue(organizacion.getZonasRegistradas().contains(zonaDeCobertura1));
     	assertTrue(organizacion.getZonasRegistradas().contains(zonaDeCobertura2));
+    }
+    
+    @Test
+    void unaOrganizacionPuedeDejarDeEstarRegistradaEnUnaZonaDeCobertura() {
+    	organizacion.registrarEnZona(zonaDeCobertura1);
+    	assertTrue(organizacion.getZonasRegistradas().contains(zonaDeCobertura1));
+    	organizacion.desregistrarEnZona(zonaDeCobertura1);
+    	assertFalse(organizacion.getZonasRegistradas().contains(zonaDeCobertura1));
+    	verify(zonaDeCobertura1, times(1)).quitarObservador(organizacion);
     }
     
     @Test

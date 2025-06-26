@@ -12,9 +12,10 @@ import java.util.List;
 
 import tpIntegrador.Muestra;
 import tpIntegrador.Ubicacion;
-import tpIntegrador.Usuario;
+import tpIntegrador.ZonaDeCobertura;
 import tpIntegrador.Opinion;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
 
 
 public class MuestraTestCase {
@@ -143,5 +144,14 @@ public class MuestraTestCase {
     	assertThrows(IllegalArgumentException.class, () -> { 
 			 muestra1.agregarOpinion(opinion3);
 	        });
+    }
+    
+    @Test
+    void cuandoUnaMuestraSeVerificaLeAvisaASuZonaDeCobertura() {
+    	ZonaDeCobertura zona1 = mock(ZonaDeCobertura.class);
+    	muestra1.agregarObserver(zona1);
+    	muestra1.agregarOpinion(opinion1);
+    	muestra1.agregarOpinion(opinion2);
+    	verify(zona1, times(1)).muestraFueVerificada(muestra1);
     }
 }

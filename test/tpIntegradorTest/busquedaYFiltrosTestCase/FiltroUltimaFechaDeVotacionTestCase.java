@@ -1,11 +1,11 @@
-package tpIntegradorTest;
+package tpIntegradorTest.busquedaYFiltrosTestCase;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpIntegrador.FiltroUltimaFechaDeVotacion;
 import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
+import tpIntegrador.busquedaYFiltros.FiltroUltimaFechaDeVotacion;
 
 import static org.mockito.Mockito.*;
 

@@ -1,4 +1,6 @@
-package tpIntegrador;
+package tpIntegrador.busquedaYFiltros;
+
+import tpIntegrador.Muestra;
 
 public class FiltroNivelDeValidacion extends FiltroMuestra{
 	

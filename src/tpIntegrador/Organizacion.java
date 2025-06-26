@@ -48,10 +48,13 @@ public class Organizacion implements ObserverDeOrganizacion {
          return historialDeMuestras;
     }
 
-
+   
+    
+    
     @Override
     public void nuevaMuestra(ZonaDeCobertura zona ,Muestra muestra) {
-        if (funcionalidadNuevaMuestra != null)  // Verifica que la funcionalidad de validación esté configurada
+        registrarMuestra(muestra);
+    	if (funcionalidadNuevaMuestra != null)  // Verifica que la funcionalidad de validación esté configurada
             funcionalidadNuevaMuestra.nuevoEvento(this, zona, muestra); 
     }
 
@@ -64,6 +67,7 @@ public class Organizacion implements ObserverDeOrganizacion {
 
     public void registrarEnZona(ZonaDeCobertura zona) {
         zonasRegistradas.add(zona);
+        zona.agregarObservador(this);
     }
 
     public void registrarMuestra(Muestra muestra) {
@@ -87,4 +91,9 @@ public class Organizacion implements ObserverDeOrganizacion {
         }
         this.cantDeEmpleados -= cantidad;
     }
+
+	public void desregistrarEnZona(ZonaDeCobertura zonaDeCobertura) {
+		zonasRegistradas.remove(zonaDeCobertura);
+        zonaDeCobertura.quitarObservador(this);
+	}
 }

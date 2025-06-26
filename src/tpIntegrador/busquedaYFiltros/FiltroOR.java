@@ -1,23 +1,25 @@
-package tpIntegrador;
+package tpIntegrador.busquedaYFiltros;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FiltroAND extends FiltroMuestra {
+import tpIntegrador.Muestra;
+
+public class FiltroOR extends FiltroMuestra {
 	
 	List<FiltroMuestra> filtros;
-	
-	public FiltroAND() {
-		filtros = new ArrayList<>();
-	}
 	
 	public List<FiltroMuestra> getFiltros() {
 		return filtros;
 	}
-
+	
+	public FiltroOR() {
+		filtros = new ArrayList<>();
+	}
+	
 	@Override
 	public boolean cumple(Muestra muestra) {
-		return filtros.stream().allMatch(filtro -> filtro.cumple(muestra));
+		return filtros.stream().anyMatch(filtro -> filtro.cumple(muestra));
 	}
 	
 	public void agregarFiltro(FiltroMuestra nuevoFiltro) {

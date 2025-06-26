@@ -1,4 +1,4 @@
-package tpIntegradorTest;
+package tpIntegradorTest.busquedaYFiltrosTestCase;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -9,9 +9,10 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpIntegrador.BusquedaDeMuestra;
-import tpIntegrador.FiltroTipoDeInsecto;
 import tpIntegrador.Muestra;
+import tpIntegrador.busquedaYFiltros.BusquedaDeMuestra;
+import tpIntegrador.busquedaYFiltros.FiltroTipoDeInsecto;
+
 import static org.mockito.Mockito.*;
 
 

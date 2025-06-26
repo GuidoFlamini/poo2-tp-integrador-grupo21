@@ -11,9 +11,9 @@ import java.time.LocalDate;
 import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
 import tpIntegrador.Ubicacion;
-import tpIntegrador.Usuario;
-import tpIntegrador.UsuarioExperto;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
+import tpIntegrador.usuario.UsuarioExperto;
 
 public class UsuarioTestCase {
 	Usuario pepe = new Usuario("pepe", false);

@@ -1,10 +1,12 @@
-package tpIntegrador;
+package tpIntegrador.usuario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BooleanSupplier;
 
+import tpIntegrador.Muestra;
+import tpIntegrador.Opinion;
 import tpIntegrador.enums.TipoDeOpinion;
 
 public class Usuario {

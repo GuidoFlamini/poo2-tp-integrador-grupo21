@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
 
-public class Muestra {
+public class Muestra implements SubjectMuestra {
     private String foto;
     private Ubicacion ubicacion;
     private LocalDate fechaDeCreacion;
@@ -74,11 +75,6 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
         }
     }
 
-    private void notificarVerificada() {
-        for (ObserverDeZonaDeCobertura observador : observadores) {
-            observador.muestraFueVerificada(this);
-    	}
-    }
     
     private boolean elUsuarioYaOpino(String usuarioQueQuiereOpinar) {
     	return nombresDeUsuario.stream().anyMatch(nombreUsuario -> (nombreUsuario==usuarioQueQuiereOpinar));
@@ -151,6 +147,24 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 		}
 		
 		return masReciente;
+	}
+
+	@Override
+	public void notificarVerificada() {
+		for (ObserverDeZonaDeCobertura observador : observadores) {
+            observador.muestraFueVerificada(this);
+    	}
+		
+	}
+
+	@Override
+	public void agregarObserver(ObserverDeZonaDeCobertura observer) {
+		observadores.add(observer);
+	}
+
+	@Override
+	public void quitarObserver(ObserverDeZonaDeCobertura observer) {
+		observadores.remove(observer);
 	} 
 }
 

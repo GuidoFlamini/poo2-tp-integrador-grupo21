@@ -3,7 +3,10 @@ package tpIntegrador;
 import java.util.ArrayList;
 import java.util.List;
 
+import tpIntegrador.busquedaYFiltros.BusquedaDeMuestra;
+import tpIntegrador.busquedaYFiltros.FiltroMuestra;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
 
 public class GestorDeMuestras {
 	//La idea es que esta clase tenga todas las muestras del sistema

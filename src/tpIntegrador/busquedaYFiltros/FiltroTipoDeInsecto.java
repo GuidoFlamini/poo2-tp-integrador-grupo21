@@ -1,5 +1,6 @@
-package tpIntegrador;
+package tpIntegrador.busquedaYFiltros;
 
+import tpIntegrador.Muestra;
 import tpIntegrador.enums.TipoDeOpinion;
 
 public class FiltroTipoDeInsecto extends FiltroMuestra {

@@ -1,5 +1,7 @@
 package tpIntegrador;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.usuario.Usuario;
+
 import java.time.LocalDate;
 
 public class Opinion {

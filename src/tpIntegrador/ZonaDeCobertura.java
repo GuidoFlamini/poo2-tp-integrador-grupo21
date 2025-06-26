@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Observer;
 import java.util.ArrayList;
 
-public class ZonaDeCobertura implements ObserverDeZonaDeCobertura{
+public class ZonaDeCobertura implements ObserverDeZonaDeCobertura, SubjectZonaDeCobertura{
 	
 	String nombre;
 	Ubicacion epicentro;
@@ -57,7 +57,7 @@ public class ZonaDeCobertura implements ObserverDeZonaDeCobertura{
 	
 	
 
-	private boolean laMuestraEstaDentroDeLaZona(Muestra muestra) {
+	public boolean laMuestraEstaDentroDeLaZona(Muestra muestra) {
 		return (epicentro.distanciaEnKmA(muestra.getUbicacion()) < radio);
 	}
 
@@ -71,26 +71,33 @@ public class ZonaDeCobertura implements ObserverDeZonaDeCobertura{
 		return zonasConLasQueSeSolapa;
 	}
 	
-	public void agregarObservador(ObserverDeOrganizacion observador) {
-	   	observadores.add(observador);
-    }
-
 	public void agregarMuestra(Muestra muestra) {
 		if (laMuestraEstaDentroDeLaZona(muestra)) {
 			muestras.add(muestra);
     	    notificarNuevaMuestra(muestra);
+    	    muestra.agregarObserver(this);
         } 
     }
+	
+	@Override
+	public void agregarObservador(ObserverDeOrganizacion observador) {
+	   	observadores.add(observador);
+    }
+	
+	@Override
+	public void quitarObservador(ObserverDeOrganizacion observador) {
+		observadores.remove(observador);
+	}
 
-    
-    private void notificarNuevaMuestra(Muestra muestra) {  // notificar a los observadores sobre nueva muestra
+    @Override
+    public void notificarNuevaMuestra(Muestra muestra) {  // notificar a los observadores sobre nueva muestra
         for (ObserverDeOrganizacion observador : observadores) {
             observador.nuevaMuestra(this, muestra);
         }
     }
 
-  
-    private void notificarMuestraVerificada(Muestra muestra) {  // notificar a los observadores sobre muestra verificada
+    @Override
+    public void notificarMuestraVerificada(Muestra muestra) {  // notificar a los observadores sobre muestra verificada
         for (ObserverDeOrganizacion observador : observadores) {
             observador.muestraVerificada(this, muestra);
         }
