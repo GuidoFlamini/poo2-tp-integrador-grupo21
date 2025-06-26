@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import tpIntegrador.enums.TipoDeOrganizacion;
 
-public class Organizacion implements Observer {  // implements o extens??
+public class Organizacion implements Observer {  
     private String nombre; 
     private Ubicacion ubicacion;
     private TipoDeOrganizacion tipo; // (salud, educativa, cultural, asistencia)
@@ -50,16 +50,15 @@ public class Organizacion implements Observer {  // implements o extens??
 
 
     @Override
-    public void nuevaMuestra(Muestra muestra) {
-    //    if (funcionalidadNuevaMuestra != null)  // Verifica que la funcionalidad de validación esté configurada
-            funcionalidadNuevaMuestra.nuevoEvento(this, null, muestra); // zona puede pasarse si se modela
+    public void nuevaMuestra(ZonaDeCobertura zona ,Muestra muestra) {
+        if (funcionalidadNuevaMuestra != null)  // Verifica que la funcionalidad de validación esté configurada
+            funcionalidadNuevaMuestra.nuevoEvento(this, zona, muestra); 
     }
 
     @Override
-    public void muestraVerificada(Muestra muestra) {
-        if (//funcionalidadValidacion != null && 
-            muestra.esMuestraVerificada())
-            funcionalidadValidacion.nuevoEvento(this, null, muestra);
+    public void muestraVerificada(ZonaDeCobertura zona, Muestra muestra) {
+        if (funcionalidadValidacion != null && muestra.esMuestraVerificada())
+            funcionalidadValidacion.nuevoEvento(this, zona, muestra);
     }
 
 

@@ -87,14 +87,14 @@ public class ZonaDeCobertura {
     
     private void notificarNuevaMuestra(Muestra muestra) { // notificar a los observadores sobre nueva muestra
         for (Observer observador : observadores) {
-            observador.nuevaMuestra(muestra);
+            observador.nuevaMuestra(this, muestra);
         }
     }
 
   
     private void notificarMuestraVerificada(Muestra muestra) {  // notificar a los observadores sobre muestra verificada
         for (Observer observador : observadores) {
-            observador.muestraVerificada(muestra);
+            observador.muestraVerificada(this, muestra);
         }
     }
 }

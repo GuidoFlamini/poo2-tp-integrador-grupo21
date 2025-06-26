@@ -2,8 +2,8 @@ package tpIntegrador;
 
 
 interface Observer {
-    void nuevaMuestra(Muestra muestra);
-    void muestraVerificada(Muestra muestra);
+    void nuevaMuestra(ZonaDeCobertura zona, Muestra muestra);
+    void muestraVerificada(ZonaDeCobertura zona, Muestra muestra);
 }
 
 //public abstract class Observer {

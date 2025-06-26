@@ -110,9 +110,6 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
                     tipo -> tipo,                   // clave: TipoDeOpinion
                     Collectors.counting()           // valor: cantidad de veces que aparece
             ))
-
-            //revisar a partir de acá.
-
                 .entrySet().stream()                // stream de pares (TipoDeOpinion, cantidad)
                 .max(Map.Entry.comparingByValue())  // el que tenga la cantidad más grande
                 .map(Map.Entry::getKey)             // devolver solo el TipoDeOpinion
