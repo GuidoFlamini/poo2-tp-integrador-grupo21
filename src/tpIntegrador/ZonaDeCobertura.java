@@ -75,7 +75,7 @@ public class ZonaDeCobertura implements ObserverDeZonaDeCobertura{
 	   	observadores.add(observador);
     }
 
-	public void agregarMuestras(Muestra muestra) {
+	public void agregarMuestra(Muestra muestra) {
 		if (laMuestraEstaDentroDeLaZona(muestra)) {
 			muestras.add(muestra);
     	    notificarNuevaMuestra(muestra);
