@@ -27,7 +27,7 @@ public class GestorDeMuestras {
 	}
 	
 	public void agregarMuestra(Muestra nuevaMuestra) {
-		if(nuevaMuestra.laOpinionMasReciente().toString().startsWith("VINCHUCA")) {
+		if(nuevaMuestra.laOpinionMasReciente().getTipo().toString().startsWith("VINCHUCA")) {
 			nuevaMuestra.getUsuarioCreadorDeMuestra().enviarMuestra(nuevaMuestra);
 			muestras.add(nuevaMuestra);
 			List <ZonaDeCobertura>listaDeZonas = zonasDeCobertura.getZonas();

@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import tpIntegrador.FiltroMuestra;
 import tpIntegrador.FiltroTipoDeInsecto;
 import tpIntegrador.GestorDeMuestras;
+import tpIntegrador.GestorDeZonas;
 import tpIntegrador.Muestra;
+import tpIntegrador.Opinion;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.Usuario;
 import tpIntegrador.ZonaDeCobertura;
@@ -16,22 +18,26 @@ import tpIntegrador.enums.TipoDeOpinion;
 import static org.mockito.Mockito.*;
 
 public class GestorDeMuestrasTestCase {
-	GestorDeMuestras unGestorDeMuestras = new GestorDeMuestras();
+	GestorDeMuestras unGestorDeMuestras = new GestorDeMuestras(mock(GestorDeZonas.class));
 	Ubicacion unq = mock(Ubicacion.class);
 	Usuario unUsuario = mock(Usuario.class);
 	TipoDeOpinion vinchucaInfestans = TipoDeOpinion.VINCHUCA_INFESTANS;
 	ZonaDeCobertura quilmes = mock(ZonaDeCobertura.class);
 	Muestra unaMuestra = mock(Muestra.class);
 	Muestra otraMuestra = mock(Muestra.class);
-
+	Opinion opinion = mock(Opinion.class);
 	
 	@BeforeEach
 	void setUp() {
-		unGestorDeMuestras = new GestorDeMuestras();
+		unGestorDeMuestras = new GestorDeMuestras(mock(GestorDeZonas.class));
 		when(unaMuestra.getUbicacion()).thenReturn(unq);
 		when(unaMuestra.getUsuarioCreadorDeMuestra()).thenReturn(unUsuario);
+		when(unaMuestra.laOpinionMasReciente()).thenReturn(opinion);
 		when(otraMuestra.getUbicacion()).thenReturn(unq);
 		when(otraMuestra.getUsuarioCreadorDeMuestra()).thenReturn(unUsuario);
+		when(otraMuestra.laOpinionMasReciente()).thenReturn(opinion);
+		when(opinion.getTipo()).thenReturn(vinchucaInfestans);
+
 	}
 	
 	@Test
