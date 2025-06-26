@@ -9,12 +9,14 @@ public class ZonaDeCobertura {
 	Ubicacion epicentro;
 	double radio; //en kilometros
 	List<Observer> observadores;
+	List<Muestra> muestras;
 
 	public ZonaDeCobertura(String nombre, Ubicacion epicentro, double radio) {
 		this.nombre = nombre;
 		this.epicentro = epicentro;
 		this.radio = radio;
 		this.observadores = new ArrayList<>();
+		this.muestras = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -27,6 +29,14 @@ public class ZonaDeCobertura {
 
 	public double getRadio() {
 		return radio;
+	}
+
+	public List<Observer> getObservadores() {
+		return observadores;
+	}
+
+	public List<Muestra> getMuestras() {
+		return muestras;
 	}
 
 	public boolean seSolapaCon(ZonaDeCobertura otraZonaDeCobertura) {
@@ -63,4 +73,29 @@ public class ZonaDeCobertura {
 	public void agregarObservador(Observer observador) {
 	   	observadores.add(observador);
     }
+
+	public void agregarMuestras(Muestra muestra) {
+		if (laMuestraEstaDentroDeLaZona(muestra) && muestra.esMuestraVerificada()) {
+			muestras.add(muestra);
+    	    notificarMuestraVerificada(muestra);
+        } else if (laMuestraEstaDentroDeLaZona(muestra)){
+			muestras.add(muestra);
+			notificarNuevaMuestra(muestra);
+		}
+    }
+
+    
+    private void notificarNuevaMuestra(Muestra muestra) { // notificar a los observadores sobre nueva muestra
+        for (Observer observador : observadores) {
+            observador.nuevaMuestra(muestra);
+        }
+    }
+
+  
+    private void notificarMuestraVerificada(Muestra muestra) {  // notificar a los observadores sobre muestra verificada
+        for (Observer observador : observadores) {
+            observador.muestraVerificada(muestra);
+        }
+    }
 }
+
