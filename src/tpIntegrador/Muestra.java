@@ -15,6 +15,7 @@ public class Muestra implements SubjectMuestra {
     private List<Opinion> opiniones;
     private Usuario usuarioCreadorDeMuestra;
     private List<ObserverDeZonaDeCobertura> observadores;
+    private MuestraState estado;
 
     
 
@@ -29,6 +30,11 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
         opiniones.add(opinionInicial);
         this.usuarioCreadorDeMuestra = usuarioCreadorDeMuestra;
         this.observadores = new ArrayList<>();
+        if(usuarioCreadorDeMuestra.esEspecialista()) {
+			estado = new MuestraParcialmenteVerificada();
+		} else {
+			estado = new MuestraNoVerificada();
+		}
     }
 
     public LocalDate getFechaDeCreacion() {
@@ -58,25 +64,43 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     public String getNombreDeUsuarioCreador() {
     	return usuarioCreadorDeMuestra.getNombre();
     }
-    
-    public void agregarOpinion(Opinion opinion) {
-    	if(elUsuarioYaOpino(opinion.getNombreDeUsuario()) || esMuestraVerificada() ) {
-    		throw new IllegalArgumentException("No puedes opinar dos veces sobre la misma muestra o es la muestra está verificada.");
-    	} else {
-    		nombresDeUsuario.add(opinion.getNombreDeUsuario());
-    		opiniones.add(opinion);
-            verificarMuestra();
-        }
+
+    public MuestraState getEstadoDeMuestra() {
+        return estado;
     }
-        
-    public void verificarMuestra() {
-        if (esMuestraVerificada()){
-            notificarVerificada();
-        }
+
+    public boolean esMuestraVerificada() {
+        return estado.esVerificada();
+    }
+
+    public boolean esParcialmenteVerificada() {
+        return estado.esParcialmenteVerificada();
     }
 
     
-    private boolean elUsuarioYaOpino(String usuarioQueQuiereOpinar) {
+
+    public void agregarOpinion(Opinion opinion) {
+        estado.agregarOpinion(this, opinion);
+        actualizarEstado();
+    }
+        
+    private void actualizarEstado() {
+        long cantidadExpertos = opiniones.stream()
+                                         .filter(opinion -> opinion.esOpinionDeExperto())
+                                         .count();
+
+        if (cantidadExpertos >= 2) {
+            estado = new MuestraVerificada();
+        } else if (cantidadExpertos == 1) {
+            estado = new MuestraParcialmenteVerificada();
+        } else {
+            estado = new MuestraNoVerificada();
+        }
+    }
+
+
+    
+    public boolean elUsuarioYaOpino(String usuarioQueQuiereOpinar) {
     	return nombresDeUsuario.stream().anyMatch(nombreUsuario -> (nombreUsuario==usuarioQueQuiereOpinar));
     }
 
@@ -100,25 +124,6 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 		}
 	}
 
-
-    public boolean esMuestraVerificada() { //  Para que la muestra quede verificada, deben coincidir dos expertos en su opinión
-          if (hayOpinionesDeExpertos())   {
-            return getOpinionesDeExperto().stream()
-                        .collect(Collectors.groupingBy(
-                            opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
-                            Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
-                        .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
-                       .anyMatch(cantidad -> cantidad >= 2);   // Esto nos dice si hay algún elemento que se repite al menos 2 veces
-        } else {
-            return false;
-        }
-    }
-
-    private List<Opinion> getOpinionesDeExperto() {
-        return getOpiniones().stream()
-                                .filter(opinion -> opinion.esOpinionDeExperto())
-                                .collect(Collectors.toList());
-    } 
 
 
 
