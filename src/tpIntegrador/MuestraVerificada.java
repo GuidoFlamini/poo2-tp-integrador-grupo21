@@ -1,4 +1,4 @@
-package tpIntegrador.muestra;
+package tpIntegrador;
 
 public class MuestraVerificada {
     
