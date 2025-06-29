@@ -1,5 +1,7 @@
 package tpIntegrador;
 
+import tpIntegrador.enums.TipoDeOpinion;
+
 
 public abstract class MuestraState {
     
@@ -12,4 +14,6 @@ public abstract class MuestraState {
     }
 
     protected abstract void agregarOpinion(Muestra muestra, Opinion opinion);
+
+    public abstract TipoDeOpinion resultadoActual(Muestra muestra);
 }

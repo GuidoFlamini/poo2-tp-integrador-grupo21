@@ -77,8 +77,6 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
         return estado.esParcialmenteVerificada();
     }
 
-    
-
     public void agregarOpinion(Opinion opinion) {
         estado.agregarOpinion(this, opinion);
         actualizarEstado();
@@ -105,7 +103,7 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     }
 
     public boolean hayOpinionesDeExpertos() {
-        return getOpiniones().stream().anyMatch(opinion -> opinion.esOpinionDeExperto());
+        return esMuestraVerificada() || esParcialmenteVerificada();
     }
 
 
@@ -125,20 +123,16 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 	}
 
 
-
-
-
     public TipoDeOpinion resultadoActual() {  // Con las opiniones que hay, cual es el tipo mas votado. (osea, cual aparece mas veces)
-            return getTiposDeOpinion().stream()
-                .collect(Collectors.groupingBy(
-                    tipo -> tipo,                   // clave: TipoDeOpinion
-                    Collectors.counting()           // valor: cantidad de veces que aparece
-            ))
-                .entrySet().stream()                // stream de pares (TipoDeOpinion, cantidad)
-                .max(Map.Entry.comparingByValue())  // el que tenga la cantidad más grande
-                .map(Map.Entry::getKey)             // devolver solo el TipoDeOpinion
-                .orElse(null);                // si no hay opiniones, devuelve null
+        return estado.resultadoActual(this);         
     }
+
+    public List<Opinion> getOpinionesDeExperto() {
+    return opiniones.stream()
+                    .filter(opinion -> opinion.esOpinionDeExperto())
+                    .collect(Collectors.toList());
+    }
+
 
 
 	public Opinion laOpinionMasReciente() {

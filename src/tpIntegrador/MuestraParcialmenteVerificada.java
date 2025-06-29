@@ -1,5 +1,9 @@
 package tpIntegrador;
 
+import static org.junit.jupiter.api.DynamicTest.stream;
+
+import tpIntegrador.enums.TipoDeOpinion;
+
 public class MuestraParcialmenteVerificada extends MuestraState { // Debe tener al menos un experto e impedir que un usuario basico opine.
     
     @Override
@@ -15,5 +19,13 @@ public class MuestraParcialmenteVerificada extends MuestraState { // Debe tener 
     		muestra.getNombresDeUsuario().add(opinion.getNombreDeUsuario());
     		muestra.getOpiniones().add(opinion);
         }
+    }
+
+    @Override
+    public TipoDeOpinion resultadoActual(Muestra muestra) {
+        return muestra.getOpinionesDeExperto().stream()
+                .map(opinion -> opinion.getTipo())
+                .findAny()
+                .orElse(null); // este casp no se va a a dar nunca.
     }
 }
