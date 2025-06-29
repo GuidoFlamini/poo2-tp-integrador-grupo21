@@ -11,5 +11,5 @@ public abstract class MuestraState {
         return false; 
     }
 
-    public abstract void agregarOpinion(Muestra muestra, Opinion opinion);
+    protected abstract void agregarOpinion(Muestra muestra, Opinion opinion);
 }
