@@ -3,11 +3,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpIntegrador.Muestra;
 import tpIntegrador.busquedaYFiltros.FiltroAND;
 import tpIntegrador.busquedaYFiltros.FiltroFechaDeCreacion;
 import tpIntegrador.busquedaYFiltros.FiltroNivelDeValidacion;
 import tpIntegrador.busquedaYFiltros.FiltroOR;
+import tpIntegrador.Muestra;
 
 import static org.mockito.Mockito.*;
 

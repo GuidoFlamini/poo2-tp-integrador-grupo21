@@ -7,10 +7,10 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
-import tpIntegrador.Muestra;
 import tpIntegrador.Organizacion;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
+import tpIntegrador.Muestra;
 
 
 public class ZonaDeCoberturaTestCase {

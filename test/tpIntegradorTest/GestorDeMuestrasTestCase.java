@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 import tpIntegrador.GestorDeMuestras;
 import tpIntegrador.GestorDeZonas;
-import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
 import tpIntegrador.busquedaYFiltros.FiltroMuestra;
 import tpIntegrador.busquedaYFiltros.FiltroTipoDeInsecto;
 import tpIntegrador.enums.TipoDeOpinion;
+import tpIntegrador.Muestra;
 import tpIntegrador.usuario.Usuario;
 
 import static org.mockito.Mockito.*;

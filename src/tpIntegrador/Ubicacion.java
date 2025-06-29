@@ -1,8 +1,6 @@
 package tpIntegrador;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 public class Ubicacion {
 

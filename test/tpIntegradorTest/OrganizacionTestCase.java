@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
 import tpIntegrador.FuncionalidadExterna;
-import tpIntegrador.Muestra;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
 import tpIntegrador.Opinion;
 import tpIntegrador.Organizacion;
 import tpIntegrador.enums.TipoDeOrganizacion;
+import tpIntegrador.Muestra;
 import tpIntegrador.usuario.Usuario;
 
 public class OrganizacionTestCase {

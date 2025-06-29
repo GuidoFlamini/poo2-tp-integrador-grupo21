@@ -1,7 +1,6 @@
 package tpIntegrador;
 
 import java.util.List;
-import java.util.Observer;
 import java.util.ArrayList;
 
 public class ZonaDeCobertura implements ObserverDeZonaDeCobertura, SubjectZonaDeCobertura{

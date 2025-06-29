@@ -1,7 +1,6 @@
 package tpIntegrador.busquedaYFiltros;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import tpIntegrador.Muestra;
 

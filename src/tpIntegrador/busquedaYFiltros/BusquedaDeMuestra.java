@@ -1,6 +1,5 @@
 package tpIntegrador.busquedaYFiltros;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import tpIntegrador.Muestra;
