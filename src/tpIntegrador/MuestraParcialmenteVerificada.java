@@ -1,7 +1,5 @@
 package tpIntegrador;
 
-import static org.junit.jupiter.api.DynamicTest.stream;
-
 import tpIntegrador.enums.TipoDeOpinion;
 
 public class MuestraParcialmenteVerificada extends MuestraState { // Debe tener al menos un experto e impedir que un usuario basico opine.
