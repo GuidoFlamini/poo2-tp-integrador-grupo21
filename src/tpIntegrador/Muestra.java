@@ -68,6 +68,10 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
         return estado;
     }
 
+    //public void setEstado(MuestraState estado) {      //SEGUN EL LIBRO DEBE EXISTIR ESTE METODO
+    //    this.estado = estado;
+    //}
+
     public boolean esMuestraVerificada() {
         return estado.esVerificada();
     }

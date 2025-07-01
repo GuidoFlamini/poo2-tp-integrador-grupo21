@@ -24,6 +24,6 @@ public class MuestraParcialmenteVerificada extends MuestraState { // Debe tener 
         return muestra.getOpinionesDeExperto().stream()
                 .map(opinion -> opinion.getTipo())
                 .findAny()
-                .orElse(null); // este casp no se va a a dar nunca.
+                .orElse(null); // este caso no se va a a dar nunca.
     }
 }
