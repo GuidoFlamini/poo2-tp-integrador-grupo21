@@ -22,7 +22,7 @@ public class MuestraVerificada extends MuestraState {
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
-                .orElse(null);
+                .orElse(null); // este caso no se va a a dar nunca.
     }
 
 	@Override

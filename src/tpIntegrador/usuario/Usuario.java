@@ -43,7 +43,7 @@ public class Usuario {
 	}
 	
 	public void opinarSobre(TipoDeOpinion tipoDeOpinion, Muestra m) {
-			this.actualizarCategoria();
+			actualizarCategoria();
 			categoria.opinarSobre(this, tipoDeOpinion, m);
 		}
 		
