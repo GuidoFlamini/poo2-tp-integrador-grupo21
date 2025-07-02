@@ -28,5 +28,17 @@ public class MuestraNoVerificada extends MuestraState {
                 .max(Map.Entry.comparingByValue())  // el que tenga la cantidad más grande
                 .map(Map.Entry::getKey)             // devolver solo el TipoDeOpinion
                 .orElse(null); 
-    } 
+    }
+
+	@Override
+	protected String getNivelDeValidacion() {
+		return "Votada";
+	} 
+	
+	@Override
+	public void actualizarEstado(Muestra m) {
+		if (m.hayOpinionesDeExpertos()) {
+        	m.setEstado(new MuestraParcialmenteVerificada());
+		}
+	}
 }

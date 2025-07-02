@@ -3,9 +3,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import tpIntegrador.Muestra;
 import tpIntegrador.busquedaYFiltros.FiltroTipoDeInsecto;
 import tpIntegrador.enums.TipoDeOpinion;
-import tpIntegrador.Muestra;
 
 import static org.mockito.Mockito.*;
 

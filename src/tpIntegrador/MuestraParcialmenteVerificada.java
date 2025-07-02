@@ -1,13 +1,11 @@
 package tpIntegrador;
 
+import java.util.stream.Collectors;
+
 import tpIntegrador.enums.TipoDeOpinion;
 
 public class MuestraParcialmenteVerificada extends MuestraState { // Debe tener al menos un experto e impedir que un usuario basico opine.
     
-    @Override
-    public boolean esParcialmenteVerificada() {
-        return true;
-    }
 
     @Override
     public void agregarOpinion(Muestra muestra, Opinion opinion) {
@@ -26,4 +24,27 @@ public class MuestraParcialmenteVerificada extends MuestraState { // Debe tener 
                 .findAny()
                 .orElse(null); // este caso no se va a a dar nunca.
     }
+
+	@Override
+	protected String getNivelDeValidacion() {
+		return "Parcialmente Verificada";
+	}
+	
+	@Override
+	public void actualizarEstado(Muestra m) {
+		if(hayDosOMasExpertosConLaMismaOpinion(m)) {
+			m.setEstado(new MuestraVerificada());
+			m.notificarVerificada();
+		}
+		
+	}
+	
+	private boolean hayDosOMasExpertosConLaMismaOpinion(Muestra m) {
+		return m.getOpinionesDeExperto().stream()
+        .collect(Collectors.groupingBy(
+                opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
+                Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
+            .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
+           .anyMatch(cantidad -> cantidad >= 2);
+	}
 }

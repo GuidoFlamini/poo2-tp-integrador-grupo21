@@ -6,17 +6,18 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
 import tpIntegrador.FuncionalidadExterna;
+import tpIntegrador.Muestra;
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
 import tpIntegrador.Opinion;
 import tpIntegrador.Organizacion;
 import tpIntegrador.enums.TipoDeOrganizacion;
-import tpIntegrador.Muestra;
 import tpIntegrador.usuario.Usuario;
 
 public class OrganizacionTestCase {
-	
-	Organizacion organizacion = new Organizacion("ONG", new Ubicacion(1, 1), TipoDeOrganizacion.SALUD, 100);
+	FuncionalidadExterna funcNuevaMuestra = mock(FuncionalidadExterna.class);
+	FuncionalidadExterna funcValidacion = mock(FuncionalidadExterna.class);
+	Organizacion organizacion = new Organizacion("ONG", new Ubicacion(1, 1), TipoDeOrganizacion.SALUD, 100, funcNuevaMuestra, funcValidacion);
     Muestra muestra = mock(Muestra.class);
     ZonaDeCobertura zonaDeCobertura1 = mock(ZonaDeCobertura.class);
     ZonaDeCobertura zonaDeCobertura2 = mock(ZonaDeCobertura.class);
@@ -65,6 +66,26 @@ public class OrganizacionTestCase {
     	assertThrows(IllegalArgumentException.class, () -> { 
 			 organizacion.reducirEmpleados(-20);
 	        });
+    }
+    
+    @Test
+	void cuandoUnaOrganizacionSeEnteraDeQueUnaMuestraNuevaFueCreadaEnSuZonaDeInteresEjecutaLaFuncionalidadExterna() {
+    	organizacion.nuevaMuestra(zonaDeCobertura1, muestra);
+    	verify(funcNuevaMuestra, times(1)).nuevoEvento(organizacion, zonaDeCobertura1, muestra);
+    }
+    
+    @Test
+	void cuandoUnaOrganizacionSeEnteraDeQueUnaMuestraFueVerificadaEnSuZonaDeInteresEjecutaLaFuncionalidadExterna() {
+    	organizacion.muestraVerificada(zonaDeCobertura1, muestra);
+    	verify(funcValidacion, times(1)).nuevoEvento(organizacion, zonaDeCobertura1, muestra);
+    }
+    
+    @Test
+    void unaOrganizacionPuedeCambiarSuFuncionalidadExterna() {
+    	organizacion.setFuncionalidadNuevaMuestra(funcValidacion);
+    	assertEquals(organizacion.getFuncionalidadNuevaMuestra(), funcValidacion);
+    	organizacion.setFuncionalidadValidacion(funcNuevaMuestra);
+    	assertEquals(organizacion.getFuncionalidadValidacion(), funcNuevaMuestra);
     }
     
 }

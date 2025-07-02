@@ -3,9 +3,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
 import tpIntegrador.busquedaYFiltros.FiltroUltimaFechaDeVotacion;
-import tpIntegrador.Muestra;
 
 import static org.mockito.Mockito.*;
 

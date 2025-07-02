@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import java.util.Arrays;
 import java.util.List;
 
+import tpIntegrador.FuncionalidadExterna;
 import tpIntegrador.Ubicacion;
 
 public class UbicacionTestCase {
@@ -39,5 +40,6 @@ public class UbicacionTestCase {
 		assertTrue(ubisCercanas.contains(quilmes));
 		assertFalse(ubisCercanas.contains(madrid));
 	}
+	
 	 
 }
