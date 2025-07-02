@@ -9,9 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import tpIntegrador.Muestra;
 import tpIntegrador.busquedaYFiltros.BusquedaDeMuestra;
 import tpIntegrador.busquedaYFiltros.FiltroTipoDeInsecto;
-import tpIntegrador.Muestra;
 
 import static org.mockito.Mockito.*;
 

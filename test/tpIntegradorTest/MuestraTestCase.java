@@ -12,9 +12,10 @@ import java.util.List;
 
 import tpIntegrador.Ubicacion;
 import tpIntegrador.ZonaDeCobertura;
+import tpIntegrador.Muestra;
+import tpIntegrador.MuestraVerificada;
 import tpIntegrador.Opinion;
 import tpIntegrador.enums.TipoDeOpinion;
-import tpIntegrador.Muestra;
 import tpIntegrador.usuario.Usuario;
 
 
@@ -100,17 +101,17 @@ public class MuestraTestCase {
 
     @Test
     void cuandoUnaMuestraRecibeDosOpinionesDeExpertoSeVerifica() {
-        assertFalse(muestra1.esMuestraVerificada());
+        assertEquals(muestra1.getNivelDeValidacion(), "Votada");
     	muestra1.agregarOpinion(opinion1);
     	assertTrue(muestra1.hayOpinionesDeExpertos());
     	muestra1.agregarOpinion(opinion2);
-    	assertTrue(muestra1.esMuestraVerificada());
+        assertEquals(muestra1.getNivelDeValidacion(), "Verificada");
     }
 
     @Test
     void sePuedeSaberElNivelDeValidacionDeUnaMuestra() {
     	muestra1.agregarOpinion(opinion1);
-    	assertEquals(muestra1.getNivelDeValidacion(), "Votada");
+    	assertEquals(muestra1.getNivelDeValidacion(), "Parcialmente Verificada");
     	muestra1.agregarOpinion(opinion2);
     	assertEquals(muestra1.getNivelDeValidacion(), "Verificada");
     }
@@ -140,7 +141,7 @@ public class MuestraTestCase {
     void unaMuestraVerificadaNoPuedeRecibirMasOpiniones() {
     	muestra1.agregarOpinion(opinion1);
     	muestra1.agregarOpinion(opinion2);
-    	assertTrue(muestra1.esMuestraVerificada());
+    	assertEquals(muestra1.getNivelDeValidacion(), "Verificada");
     	assertThrows(IllegalArgumentException.class, () -> { 
 			 muestra1.agregarOpinion(opinion3);
 	        });
@@ -154,4 +155,24 @@ public class MuestraTestCase {
     	muestra1.agregarOpinion(opinion2);
     	verify(zona1, times(1)).muestraFueVerificada(muestra1);
     }
+    
+    @Test
+    void siDosExpertosEstanEnDesacuerdoLaMuestraNoSeVerifica() {
+    	when(opinion2.getTipo()).thenReturn(vinchucaInfestans);
+    	muestra1.agregarOpinion(opinion1);
+    	muestra1.agregarOpinion(opinion2);
+    	assertEquals(muestra1.getNivelDeValidacion(), "Parcialmente Verificada"); //No está verificada
+    }
+    
+    @Test
+	void unUsuarioBasicoNoPuedeOpinarUnaVezQueHayOpinionesDeExperto() {
+    	when(opinion2.esOpinionDeExperto()).thenReturn(false);
+    	muestra1.agregarOpinion(opinion1);
+		assertThrows(IllegalArgumentException.class, () -> { // pepe, que no es experto, lanza una excepción cuando intenta opinar
+	    	muestra1.agregarOpinion(opinion2);
+	        });
+		
+	}
+    
+   
 }

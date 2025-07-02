@@ -3,8 +3,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import tpIntegrador.busquedaYFiltros.FiltroNivelDeValidacion;
 import tpIntegrador.Muestra;
+import tpIntegrador.busquedaYFiltros.FiltroNivelDeValidacion;
 
 import static org.mockito.Mockito.*;
 

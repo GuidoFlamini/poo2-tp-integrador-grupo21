@@ -7,10 +7,6 @@ import tpIntegrador.enums.TipoDeOpinion;
 
 public class MuestraVerificada extends MuestraState {
 
-    @Override
-    public boolean esVerificada() {
-        return true;
-    }
     
     @Override
     public void agregarOpinion(Muestra muestra, Opinion opinion) {
@@ -28,4 +24,14 @@ public class MuestraVerificada extends MuestraState {
                 .map(Map.Entry::getKey)
                 .orElse(null);
     }
+
+	@Override
+	protected String getNivelDeValidacion() {
+		return "Verificada";
+	}
+	
+	@Override
+	public void actualizarEstado(Muestra m) {
+		//Queda vacío porque la muestra verificada no cambia(por ahora)
+	}
 }

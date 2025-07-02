@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import tpIntegrador.Muestra;
 import tpIntegrador.Opinion;
 import tpIntegrador.enums.TipoDeOpinion;
-import tpIntegrador.Muestra;
 
 public class Usuario {
 	private String nombre;
@@ -48,19 +48,17 @@ public class Usuario {
 		}
 		
 	private void actualizarCategoria() {
-		if((cantidadDeMuestrasEnviadasEnElUltimoMes() > 10) && (cantidadDeOpinionesRealizadasEnElUltimoMes() > 20) || esEspecialista) {
-			categoria = new UsuarioExperto(); 
-		} else {
-			categoria = new UsuarioBasico();
-		}
+	
+		categoria.actualizarCategoria(this);
+
 	}
 
-	private int cantidadDeOpinionesRealizadasEnElUltimoMes() {
+	protected int cantidadDeOpinionesRealizadasEnElUltimoMes() {
 		LocalDate hace30Dias = LocalDate.now().minusDays(30);
 		return (int) opinionesRealizadas.stream().filter(opinion -> opinion.getFecha().isAfter(hace30Dias)).count();
 	}
 
-	private int cantidadDeMuestrasEnviadasEnElUltimoMes() {
+	protected int cantidadDeMuestrasEnviadasEnElUltimoMes() {
 		LocalDate hace30Dias = LocalDate.now().minusDays(30);
 		return (int) muestrasEnviadas.stream().filter(muestra -> muestra.getFechaDeCreacion().isAfter(hace30Dias)).count();
 	}

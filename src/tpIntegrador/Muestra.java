@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import tpIntegrador.enums.TipoDeOpinion;
 import tpIntegrador.usuario.Usuario;
 
@@ -64,17 +65,6 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     	return usuarioCreadorDeMuestra.getNombre();
     }
 
-    public MuestraState getEstadoDeMuestra() {
-        return estado;
-    }
-
-    public boolean esMuestraVerificada() {
-        return estado.esVerificada();
-    }
-
-    public boolean esParcialmenteVerificada() {
-        return estado.esParcialmenteVerificada();
-    }
 
     public void agregarOpinion(Opinion opinion) {
         estado.agregarOpinion(this, opinion);
@@ -82,17 +72,23 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     }
         
     private void actualizarEstado() {
-        long cantidadExpertos = opiniones.stream()
-                                         .filter(opinion -> opinion.esOpinionDeExperto())
-                                         .count();
+        /*boolean hayDosOMasExpertosConLaMismaOpinion = getOpinionesDeExperto().stream()
+                .collect(Collectors.groupingBy(
+                        opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
+                        Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
+                    .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
+                   .anyMatch(cantidad -> cantidad >= 2);
 
-        if (cantidadExpertos >= 2) {
+        if (hayDosOMasExpertosConLaMismaOpinion) {
             estado = new MuestraVerificada();
-        } else if (cantidadExpertos == 1) {
+            notificarVerificada();
+        } else if (hayOpinionesDeExpertos()) {
             estado = new MuestraParcialmenteVerificada();
         } else {
             estado = new MuestraNoVerificada();
-        }
+        }*/
+    	
+    	estado.actualizarEstado(this);
     }
 
 
@@ -102,7 +98,7 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     }
 
     public boolean hayOpinionesDeExpertos() {
-        return esMuestraVerificada() || esParcialmenteVerificada();
+        return getOpiniones().stream().anyMatch(opinion -> opinion.esOpinionDeExperto());
     }
 
 
@@ -114,16 +110,13 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 
 
     public String getNivelDeValidacion() {
-		if(esMuestraVerificada()) {
-			return "Verificada";
-		} else {
-			return "Votada";
-		}
+		return estado.getNivelDeValidacion();
 	}
 
 
     public TipoDeOpinion resultadoActual() {  // Con las opiniones que hay, cual es el tipo mas votado. (osea, cual aparece mas veces)
-        return estado.resultadoActual(this);         
+        this.actualizarEstado();
+    	return estado.resultadoActual(this);         
     }
 
     public List<Opinion> getOpinionesDeExperto() {
@@ -163,6 +156,10 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
 	@Override
 	public void quitarObserver(ObserverDeZonaDeCobertura observer) {
 		observadores.remove(observer);
+	}
+
+	protected void setEstado(MuestraState nuevoEstado) {
+		this.estado = nuevoEstado;
 	} 
 }
 

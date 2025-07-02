@@ -15,16 +15,28 @@ public class Organizacion implements ObserverDeOrganizacion {
     private FuncionalidadExterna funcionalidadValidacion;
 
 
-    public Organizacion (String nombre, Ubicacion ubicacion, TipoDeOrganizacion tipo, int cantDeEmpleados) {
+    public Organizacion (String nombre, Ubicacion ubicacion, TipoDeOrganizacion tipo, int cantDeEmpleados, FuncionalidadExterna funcionalidadNuevaMuestra, FuncionalidadExterna funcionalidadValidacion) {
         this.nombre = nombre;
         this.ubicacion = ubicacion;
         this.tipo = tipo;
         this.cantDeEmpleados = cantDeEmpleados;
         this.zonasRegistradas = new ArrayList<>();
         this.historialDeMuestras = new ArrayList<>();
+        this.funcionalidadNuevaMuestra = funcionalidadNuevaMuestra;
+        this.funcionalidadValidacion = funcionalidadValidacion;
     }
+      
+    public void setFuncionalidadNuevaMuestra(FuncionalidadExterna funcionalidadNuevaMuestra) {
+		this.funcionalidadNuevaMuestra = funcionalidadNuevaMuestra;
+	}
 
-    public String getNombre() {
+	public void setFuncionalidadValidacion(FuncionalidadExterna funcionalidadValidacion) {
+		this.funcionalidadValidacion = funcionalidadValidacion;
+	}
+
+
+
+	public String getNombre() {
         return nombre;
     }
 
@@ -58,9 +70,17 @@ public class Organizacion implements ObserverDeOrganizacion {
             funcionalidadNuevaMuestra.nuevoEvento(this, zona, muestra); 
     }
 
-    @Override
+    public FuncionalidadExterna getFuncionalidadNuevaMuestra() {
+		return funcionalidadNuevaMuestra;
+	}
+
+	public FuncionalidadExterna getFuncionalidadValidacion() {
+		return funcionalidadValidacion;
+	}
+
+	@Override
     public void muestraVerificada(ZonaDeCobertura zona, Muestra muestra) {
-        if (funcionalidadValidacion != null && muestra.esMuestraVerificada())
+        if (funcionalidadValidacion != null)
             funcionalidadValidacion.nuevoEvento(this, zona, muestra);
     }
 
