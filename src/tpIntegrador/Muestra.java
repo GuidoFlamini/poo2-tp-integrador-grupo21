@@ -72,22 +72,7 @@ public Muestra(Ubicacion ubicacion, TipoDeOpinion tipo, Usuario usuarioCreadorDe
     }
         
     private void actualizarEstado() {
-        /*boolean hayDosOMasExpertosConLaMismaOpinion = getOpinionesDeExperto().stream()
-                .collect(Collectors.groupingBy(
-                        opinion -> opinion.getTipo(),       // Agrupamos los elementos iguales (clave = el propio elemento) 
-                        Collectors.counting()))             // Por cada grupo, contamos cuántas veces aparece ese elemento 
-                    .values().stream()                      // Tomamos solo los valores del mapa (las cantidades de ocurrencias)
-                   .anyMatch(cantidad -> cantidad >= 2);
-
-        if (hayDosOMasExpertosConLaMismaOpinion) {
-            estado = new MuestraVerificada();
-            notificarVerificada();
-        } else if (hayOpinionesDeExpertos()) {
-            estado = new MuestraParcialmenteVerificada();
-        } else {
-            estado = new MuestraNoVerificada();
-        }*/
-    	
+        
     	estado.actualizarEstado(this);
     }
 

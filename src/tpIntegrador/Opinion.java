@@ -18,7 +18,6 @@ public class Opinion {
     }
 
     public boolean esOpinionDeExperto() {         
-    	esOpinionDeExperto = (usuario.getCategoria() == "Usuario Experto");
     	return esOpinionDeExperto;
     }
 

@@ -16,7 +16,18 @@ import java.time.LocalDate;
 public class OpinionTestCase {
 	TipoDeOpinion vinchucaInfestans = TipoDeOpinion.VINCHUCA_INFESTANS;
 	Usuario usuario = mock(Usuario.class);
+	Usuario usuario2= mock(Usuario.class);
+	
 	Opinion opinion = new Opinion(usuario, vinchucaInfestans);
+	Opinion opinion2 = new Opinion(usuario2, vinchucaInfestans);
+	
+	@BeforeEach
+	void setUp() {
+		when(usuario.getCategoria()).thenReturn("Usuario Basico");
+		when(usuario2.getCategoria()).thenReturn("Usuario Experto");
+		opinion = new Opinion(usuario, vinchucaInfestans);
+		opinion2 = new Opinion(usuario2, vinchucaInfestans);
+	}
 	
 	@Test
 	void unaOpinionTieneUnUsuarioCreador() {
@@ -25,10 +36,15 @@ public class OpinionTestCase {
 	
 	@Test
 	void unaOpinionEmitidaPorUnUsuarioExpertoEsUnaOpinionDeExperto() {
-		when(usuario.getCategoria()).thenReturn("Usuario Basico");
 		assertFalse(opinion.esOpinionDeExperto());
-		when(usuario.getCategoria()).thenReturn("Usuario Experto");
-		assertTrue(opinion.esOpinionDeExperto());
+		assertTrue(opinion2.esOpinionDeExperto());
+	}
+	
+	@Test
+	void unaOpinionSigueSiendoDeExpertoAunqueSuCreadorHayaDejadoDESerlo() {
+		assertTrue(opinion2.esOpinionDeExperto());
+		when(usuario2.getCategoria()).thenReturn("Usuario Basico");
+		assertTrue(opinion2.esOpinionDeExperto());
 	}
 	
 	@Test
